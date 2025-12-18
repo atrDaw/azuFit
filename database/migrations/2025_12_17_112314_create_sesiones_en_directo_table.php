@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('titulo',200);
             $table->foreignId('disciplina_id')->constrained('disciplinas')->onDelete('cascade');
             $table->dateTime('fecha_hora');
-            $table->string('url_reunion',255)->nullable();
+            $table->string('url_sesion',255)->nullable();
             $table->timestamps();
         });
     }

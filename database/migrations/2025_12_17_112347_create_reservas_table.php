@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('reservas', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('sesion_id')->constrained('sesiones_en_directo')->onDelete('cascade');
             $table->enum('estado', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente');
             $table->boolean('mail_enviado')->default(false);
             $table->timestamps();
 
-            $table->unique(['usuario_id', 'sesion_id']);
+            $table->unique(['user_id', 'sesion_id']);
         });
     }
 
