@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md sticky-top shadow-sm px-4 py-3">
       <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="{{route('home')}}">
           <div class="d-flex align-items-center text-primary-color" style="width: 24px; height: 24px;">
             <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
               <path d="M6 6H42L36 24L42 42H6L12 24L6 6Z" fill="currentColor"></path>
@@ -27,9 +27,9 @@
             </li>
           </ul>
           <div class="d-flex justify-content-center align-items-center">
-            <button class="btn btn-primary rounded-lg px-4 py-2 fw-bold">
+            <a  href="{{route('login')}}"  class="btn btn-primary rounded-lg px-4 py-2 fw-bold">
               Regístrate
-            </button>
+            </a>
           </div>
         </div>
       </div>
