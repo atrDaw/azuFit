@@ -1,81 +1,97 @@
 @extends('layout')
 
-@section('title','Azufit')
+@section('title','Registro - Azufit')
 
 @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="display-4 mb-4 text-center">
-            Registro
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form class="needs-validation p-2 border rounded" novalidate style="background-color: white;" action="{{route('signup')}}" method="post">
-                @csrf
-                <div class="form-row ">
-                    <div class=" mb-3">
-                        <label for="validationCustom01">Nombre</label>
-                        <input type="text" name="name" class="form-control" id="validationCustom01" placeholder="Rick" value="" required>
-                        <div class="invalid-feedback">
-                          ?
-                        </div>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-                    <div class=" mb-3">
-                        <label for="validationCustom02">Apellido</label>
-                        <input type="text" name="surname" class="form-control" id="validationCustom02" placeholder="Sanchez" value="" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="form-row ">
-                    <div class=" mb-3">
-                        <label for="validationCustom03">Correo</label>
-                        <input type="text" name="email" class="form-control" id="validationCustom03" placeholder="Correo" required>
-                        <div class="invalid-feedback">
-                            Please provide a valid mail.
-                        </div>
-                    </div>
-                    <div class=" mb-3">
-                        <label for="validationCustom04">Contraseña</label>
-                        <input type="password" name="password" class="form-control" id="validationCustom04" placeholder="Contraseña" required>
-                         <div class="invalid-feedback">
-                            Introduce contraseña valida.
-                        </div>
-                        
-                    </div>
-                    <div class=" mb-3">
-                        <label for="validationCustom05">Repetir contraseña</label>
-                        <input type="password" name="password_confirmation" class="form-control" id="validationCustom05" placeholder="Repetir contraseña" required>
-                        <div class="invalid-feedback">
-                            Introduce contraseña valida.
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center align-items-center mb-3">
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh; padding-top: 2rem; padding-bottom: 2rem;">
+    <div class="row justify-content-center w-100">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
 
-                    <button class="btn btn-primary w-50 " type="submit">Enviar</button>
+            <div class="card border-0 shadow-sm rounded-3 bg-white">
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+
+                        <h1 class="h3 fw-bold mb-1">Crea tu cuenta</h1>
+                        <p class="small text-muted-color mb-0">Únete a la comunidad Azufit y empieza tu transformación.</p>
+                    </div>
+
+                    <form class="needs-validation" novalidate action="{{route('signup')}}" method="post">
+                        @csrf
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="validationCustom01" class="form-label small fw-bold text-muted-color">Nombre</label>
+                                <input type="text" name="name" class="form-control rounded-3 py-2" id="validationCustom01" placeholder="Ej: Rick" value="{{ old('name') }}" required>
+                                <div class="invalid-feedback">Por favor introduce tu nombre.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="validationCustom02" class="form-label small fw-bold text-muted-color">Apellido</label>
+                                <input type="text" name="surname" class="form-control rounded-3 py-2" id="validationCustom02" placeholder="Ej: Sánchez" value="{{ old('surname') }}" required>
+                                <div class="invalid-feedback">Por favor introduce tu apellido.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="validationCustom03" class="form-label small fw-bold text-muted-color">Correo Electrónico</label>
+                            <input type="email" name="email" class="form-control rounded-3 py-2" id="validationCustom03" placeholder="ejemplo@correo.com" value="{{ old('email') }}" required>
+                            <div class="invalid-feedback">Por favor introduce un correo válido.</div>
+                            @error('email')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="validationCustom04" class="form-label small fw-bold text-muted-color">Contraseña</label>
+                                <input type="password" name="password" class="form-control rounded-3 py-2" id="validationCustom04" placeholder="••••••••" required>
+                                <div class="invalid-feedback">Introduce una contraseña válida.</div>
+                                @error('password')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="validationCustom05" class="form-label small fw-bold text-muted-color">Repetir contraseña</label>
+                                <input type="password" name="password_confirmation" class="form-control rounded-3 py-2" id="validationCustom05" placeholder="••••••••" required>
+                                <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mb-4">
+                            <button class="btn btn-primary rounded-3 py-2 fw-bold shadow-sm" type="submit">
+                                Registrarme
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <p class="small text-muted-color mb-0">
+                                ¿Ya tienes una cuenta?
+                                <a href="{{route('login')}}" class="text-primary-color fw-bold text-decoration-none hover-link">
+                                    Inicia sesión aquí
+                                </a>
+                            </p>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{route('home')}}" class="small text-muted-color text-decoration-none d-flex align-items-center justify-content-center gap-1">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+                    Volver al inicio
+                </a>
+            </div>
+
         </div>
     </div>
 </div>
 
-
 <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function() {
         'use strict';
         window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
             var validation = Array.prototype.filter.call(forms, function(form) {
                 form.addEventListener('submit', function(event) {
                     if (form.checkValidity() === false) {

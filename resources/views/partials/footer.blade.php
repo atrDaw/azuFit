@@ -1,6 +1,7 @@
 <footer class="w-100 bg-dark text-white border-top py-5">
   <div class="container-fluid container-md">
     <div class="row g-4 justify-content-between">
+      
       <div class="col-12 col-md-4 col-lg-3">
         <div class="d-flex align-items-center gap-2 mb-3">
           <div class="text-primary-color" style="width: 24px; height: 24px;">
@@ -12,33 +13,38 @@
         </div>
         <p class="small text-muted-color">Tu estudio de pilates online para un cuerpo y mente equilibrados.</p>
       </div>
+
       <div class="col-6 col-md-auto">
         <h3 class="fw-bold mb-3">Explorar</h3>
-        <ul class="list-unstyled space-y-2">
-          <li><a class="small text-muted-color text-decoration-none hover:text-primary-color" href="#">Clases Online</a></li>
-          <li><a class="small text-muted-color text-decoration-none hover:text-primary-color" href="#">Clases Privadas</a></li>
-          <li><a class="small text-muted-color text-decoration-none hover:text-primary-color" href="#">Precios</a></li>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a class="small text-muted-color text-decoration-none" href="#">Clases Online</a></li>
+          <li><a class="small text-muted-color text-decoration-none" href="#">Clases Privadas</a></li>
+          <li><a class="small text-muted-color text-decoration-none" href="#">Precios</a></li>
         </ul>
       </div>
+
       <div class="col-6 col-md-auto">
         <h3 class="fw-bold mb-3">Compañía</h3>
-        <ul class="list-unstyled space-y-2">
-          <li><a class="small text-muted-color text-decoration-none hover:text-primary-color" href="#">Sobre Nosotros</a></li>
-          <li><a class="small text-muted-color text-decoration-none hover:text-primary-color" href="#">Contacto</a></li>
-          <li><a class="small text-muted-color text-decoration-none hover:text-primary-color" href="#">Carreras</a></li>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a class="small text-muted-color text-decoration-none" href="#">Sobre Nosotros</a></li>
+          <li><a class="small text-muted-color text-decoration-none" href="#">Contacto</a></li>
+          <li><a class="small text-muted-color text-decoration-none" href="#">Carreras</a></li>
         </ul>
       </div>
+
       <div class="col-6 col-md-auto">
         <h3 class="fw-bold mb-3">Legal</h3>
-        <ul class="list-unstyled space-y-2">
-          <li><a class="small text-muted-color text-decoration-none hover:text-primary-color" href="#">Términos de Servicio</a></li>
-          <li><a class="small text-muted-color text-decoration-none hover:text-primary-color" href="#">Política de Privacidad</a></li>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a class="small text-muted-color text-decoration-none" href="#">Términos de Servicio</a></li>
+          <li><a class="small text-muted-color text-decoration-none" href="#">Política de Privacidad</a></li>
         </ul>
       </div>
     </div>
-    <hr class="my-4" />
+    
+    <hr class="my-4 text-muted-color" />
+    
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center small text-muted-color">
-      <p class="mb-2 mb-sm-0">© 2024 Azufit. Todos los derechos reservados.</p>
+      <p class="mb-2 mb-sm-0">© {{date('Y')}} Azufit. Todos los derechos reservados.</p>
       <div>
       </div>
     </div>
