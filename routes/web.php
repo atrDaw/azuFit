@@ -1,7 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClaseController;
+use App\Http\Controllers\SesionController;
+use App\Http\Controllers\ReservaController;
 
 Route::get('/', function () {
     return view('index');
 })->name('home');
+ 
+Route::get('/login',[AuthController::class,'showLoginForm'])->name('login');
+Route::post('/login',[AuthController::class,'login']);
+
+Route::get('signup', [AuthController::class, 'signupForm'])->name('signupForm');
+Route::post('signup', [AuthController::class, 'signup'])->name('signup');
+
+Route::post('/logout',[AuthController::class,'logout'])->name('logout');
+
+
+route::get('/clases',[ClaseController::class,'index'])->name('clases.index');
+Route::get('/sesiones',[SesionController::class,'index'])->name('sesiones.index');
+
+Route::middleware('auth')->group(function(){
+    Route::get('dashboard',function(){
+        return view('dashboard')->name('dashboard');
+    });
+
+    Route::get('/clases/{id}',[ClaseController::class,'show'])->name('clases.show');
+
+    Route::get('/reservas',[ReservaController::class,'index'])->name('reservas.index');
+    Route::post('/reservas',[ReservaController::class,'store'])->name('reservas.store');
+    Route::delete('/reservas/{id}',[ReservaController::class,'destroy'])->name('reservas.destroy');
+});
