@@ -47,6 +47,6 @@ class AuthController extends Controller {
         $user->password = Hash::make($request->password);
         $user->role_id = $request->is_student ? 3 : 2;
         $user->save();
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', '¡Cuenta creada con éxito! Por favor inicia sesión.');
     }
 }
