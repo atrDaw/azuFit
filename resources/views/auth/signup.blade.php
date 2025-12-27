@@ -12,7 +12,6 @@
                 <div class="card-body p-4 p-md-5">
 
                     <div class="text-center mb-4">
-
                         <h1 class="h3 fw-bold mb-1">Crea tu cuenta</h1>
                         <p class="small text-muted-color mb-0">Únete a la comunidad Azufit y empieza tu transformación.</p>
                     </div>
@@ -42,7 +41,7 @@
                             @enderror
                         </div>
 
-                        <div class="row g-3 mb-4">
+                        <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label for="validationCustom04" class="form-label small fw-bold text-muted-color">Contraseña</label>
                                 <input type="password" name="password" class="form-control rounded-3 py-2" id="validationCustom04" placeholder="••••••••" required>
@@ -55,6 +54,18 @@
                                 <label for="validationCustom05" class="form-label small fw-bold text-muted-color">Repetir contraseña</label>
                                 <input type="password" name="password_confirmation" class="form-control rounded-3 py-2" id="validationCustom05" placeholder="••••••••" required>
                                 <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check form-switch ps-0">
+                                <div class="d-flex align-items-center gap-2">
+                                    <input class="form-check-input ms-0" type="checkbox" name="is_student" value="1" id="isStudentCheck" {{ old('is_student') ? 'checked' : '' }} >
+                                    
+                                    <label class="form-check-label small text-muted-color" for="isStudentCheck" style="cursor: pointer; user-select: none;">
+                                        Soy estudiante 
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
