@@ -27,29 +27,29 @@
         <footer>@include('partials.footer')</footer>
 
     </div>
-    
-    
-    @if (session('success'))
+
+
+    @if (session('success') || session('error'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            
-            @if (session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Genial!',
-                    text: "{{ session('success') }}",
-                    showConfirmButton: false,
-                    timer: 2000
-                });
+
+            @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: '¡Genial!',
+                text: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 2000
+            });
             @endif
 
-            @if (session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: '¡Ups!',
-                    text: "{{ session('error') }}",
-                    showConfirmButton: true
-                });
+            @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: '¡Ups!',
+                text: "{{ session('error') }}",
+                showConfirmButton: true
+            });
             @endif
 
         });
