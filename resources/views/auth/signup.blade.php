@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh; padding-top: 2rem; padding-bottom: 2rem;">
+<div class="container d-flex align-items-center justify-content-center main-container-centered mt-3">
     <div class="row justify-content-center w-100">
         <div class="col-12 col-md-10 col-lg-8 col-xl-6">
 

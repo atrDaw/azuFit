@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function(){
         return view('dashboard')->name('dashboard');
     });
 
+    Route::get('/clases/create',[ClaseController::class,'create'])->name('clases.create');
+    Route::post('/clases',[ClaseController::class,'store'])->name('clases.store');
     Route::get('/clases/{id}',[ClaseController::class,'show'])->name('clases.show');
 
     Route::get('/reservas',[ReservaController::class,'index'])->name('reservas.index');
