@@ -30,7 +30,7 @@ class ClaseController extends Controller {
         if ($request->hasFile('video_file')) {
             $path = $request->file('video_file')->store('videos', 'public');
             $clase->url_video = $path;
-        }else{
+        } else {
             $clase->url_video = $request->url_video;
         }
         $clase->titulo = $request->titulo;
