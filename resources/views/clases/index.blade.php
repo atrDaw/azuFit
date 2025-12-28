@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-fluid container-md py-5" style="min-height: 80vh;">
 
-    <!-- Encabezado de la sección -->
+
     <div class="text-center mb-5">
         <h1 class="display-5 fw-bold mb-3">Catálogo de Clases Grabadas</h1>
         <p class="lead text-muted-color mx-auto" style="max-width: 700px;">
@@ -13,33 +13,29 @@
         </p>
     </div>
 
-    <!-- Grid de Clases -->
+
     <div class="row g-4">
         @forelse($clases as $clase)
-            @php
-                // Lógica para asignar la imagen PNG correcta según el nombre de la disciplina
-                // Asegúrate de tener: yoga.png, pilates.png y estiramientos.png en public/images/
-                $imagen = match($clase->disciplina->nombre) {
-                    'Yoga' => asset('images/yoga.png'),
-                    'Pilates' => asset('images/pilates.png'),
-                    'Estiramientos' => asset('images/estiramientos.png'),
-                    // Imagen por defecto si no coincide ninguna
-                    default => 'https://via.placeholder.com/600x400?text=Azufit', 
-                };
-            @endphp
+        @php
+        $imagen = match($clase->disciplina->nombre) {
+        'Yoga' => asset('images/yoga.png'),
+        'Pilates' => asset('images/pilates.png'),
+        'Estiramientos' => asset('images/estiramientos.png'),
+        };
+        @endphp
 
         <div class="col-md-6 col-lg-4">
             <div class="card h-100 border-1 rounded-3 overflow-hidden card-hover-shadow transition-all">
-                
-                <!-- Contenedor de la Imagen (Reemplaza a la sección de iconos) -->
-                <div class="card-img-top position-relative" style="height: 200px;">
-                    <!-- Imagen real con ajuste de cobertura -->
-                    <img src="{{ $imagen }}" 
-                         alt="Clase de {{ $clase->disciplina->nombre }}" 
-                         class="w-100 h-100" 
-                         style="object-fit: cover;">
 
-                    <!-- Badge de Nivel flotante (Mantenemos tu lógica de colores) -->
+
+                <div class="card-img-top position-relative" style="height: 200px;">
+
+                    <img src="{{ $imagen }}"
+                        alt="Clase de {{ $clase->disciplina->nombre }}"
+                        class="w-100 h-100"
+                        style="object-fit: cover;">
+
+
                     <div class="position-absolute top-0 end-0 m-3">
                         <span class="badge rounded-pill 
                                 @if($clase->nivel == 'Principiante') bg-success 
@@ -51,8 +47,6 @@
                 </div>
 
                 <div class="card-body p-4 d-flex flex-column">
-
-                    <!-- Categoría -->
                     <div class="mb-2">
                         <span class="text-primary-color fw-bold small text-uppercase tracking-wide">
                             {{ $clase->disciplina->nombre }}
@@ -61,12 +55,10 @@
 
                     <h3 class="h5 fw-bold mb-2 text-dark">{{ $clase->titulo }}</h3>
 
-                    <!-- Descripción cortada -->
                     <p class="card-text text-muted-color small mb-4 flex-grow-1">
                         {{ Str::limit($clase->descripcion, 100) }}
                     </p>
 
-                    <!-- Botón de acción -->
                     <div class="mt-auto pt-3 border-top border-light">
                         @auth
                         <a href="{{ route('clases.show', $clase->id) }}" class="btn btn-primary w-100 rounded-3 fw-bold d-flex align-items-center justify-content-center gap-2">

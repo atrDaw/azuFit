@@ -21,7 +21,7 @@ class AuthController extends Controller {
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            return redirect()->back();
         }
         return back()->withErrors([
             'email' => 'Las credenciales no coinciden.',
@@ -32,8 +32,9 @@ class AuthController extends Controller {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect('/')->with('success', 'Has cerrado sesión correctamente.');
     }
+
     public function signupForm() {
         return view('auth.signup');
     }
@@ -50,7 +51,6 @@ class AuthController extends Controller {
             $user->save();
             // throw new \Exception('¡Esto es un simulacro de error!');
             return redirect()->route('login')->with('success', '¡Cuenta creada con éxito! Por favor inicia sesión.');
-            
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', 'Hubo un error al crear tu cuenta. Por favor, inténtalo de nuevo.')
