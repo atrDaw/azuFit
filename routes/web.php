@@ -29,12 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/clases/create', [ClaseController::class, 'create'])->name('clases.create');
     Route::post('/clases', [ClaseController::class, 'store'])->name('clases.store');
     route::get('/clases/{id}/edit', [ClaseController::class, 'edit'])->name('clases.edit');
-    route::post('/clases/{id}/destroy', [ClaseController::class, 'destroy'])->name('clases.destroy');
+    route::delete('/clases/{id}/destroy', [ClaseController::class, 'destroy'])->name('clases.destroy');
     Route::get('/clases/{id}', [ClaseController::class, 'show'])->name('clases.show');
 
     Route::get('/reservas', [ReservaController::class, 'index'])->name('reservas.index');
     Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');
-    Route::delete('/reservas/{id}', [ReservaController::class, 'destroy'])->name('reservas.destroy');
+    Route::delete('/reservas/{id}/destroy', [ReservaController::class, 'destroy'])->name('reservas.destroy');
     
     Route::get('/sesiones', [SesionController::class, 'index'])->name('sesiones.index');
     Route::get('/sesiones/create', [SesionController::class, 'create'])->name('sesiones.create');

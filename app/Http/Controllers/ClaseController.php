@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ClaseRequest;
 use Illuminate\Http\Request;
 use App\Models\Clase;
+use App\Models\Disciplina;
+use Illuminate\Support\Facades\Storage;
 
 
 class ClaseController extends Controller {
@@ -19,7 +21,7 @@ class ClaseController extends Controller {
     }
 
     public function create() {
-        $disciplinas = \App\Models\Disciplina::all();
+        $disciplinas = Disciplina::all();
         return view('clases.create', compact('disciplinas'));
     }
 
@@ -40,5 +42,18 @@ class ClaseController extends Controller {
 
         $clase->save();
         return redirect()->route('clases.index')->with('success', 'Clase creada con éxito.');
+    }
+
+    public function destroy($id) {
+        $clase = Clase::findOrFail($id);
+
+        if (!auth()->user()->is_admin) {
+            abort(403, 'No autorizado para eliminar esta clase.');
+        }
+        if ($clase->url_video && !str_starts_with($clase->url_video, 'http') && Storage::disk('public')->exists($clase->url_video)) {
+            Storage::disk('public')->delete($clase->url_video);
+        }
+        $clase->delete();
+        return redirect()->route('clases.index')->with('success', 'Clase eliminada correctamente.');
     }
 }
