@@ -69,17 +69,16 @@
                     </p>
 
                     <div class="mt-auto pt-3 border-top border-light">
-                        @auth
-                        <a href="{{ route('clases.show', $clase->id) }}" class="btn btn-primary w-100 rounded-3 fw-bold d-flex align-items-center justify-content-center gap-2">
+                        <a href="{{ route('clases.show', $clase->id) }}" class="btn w-100 rounded-3 fw-bold d-flex align-items-center justify-content-center gap-2 @auth btn-primary @else btn-outline-secondary @endauth">
+                            @auth
                             <span class="material-symbols-outlined" style="font-size: 20px;">play_circle</span>
                             Ver Clase
-                        </a>
-                        @else
-                        <a href="{{ route('login') }}" class="btn btn-outline-secondary w-100 rounded-3 fw-bold d-flex align-items-center justify-content-center gap-2">
+                            @else
                             <span class="material-symbols-outlined" style="font-size: 20px;">lock</span>
                             Inicia sesión para ver
+                            @endauth
                         </a>
-                        @endauth
+                        
                     </div>
                 </div>
             </div>

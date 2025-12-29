@@ -21,7 +21,7 @@ class AuthController extends Controller {
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->back();
+            return redirect()->intended(route('home'))->with('success', 'Has iniciado sesión correctamente.');
         }
         return back()->withErrors([
             'email' => 'Las credenciales no coinciden.',

@@ -44,6 +44,38 @@ class ClaseController extends Controller {
         return redirect()->route('clases.index')->with('success', 'Clase creada con éxito.');
     }
 
+    public function edit($id) {
+        $clase = Clase::findOrFail($id);
+        $disciplinas = Disciplina::all();
+        return view('clases.edit', compact('clase', 'disciplinas'));
+    }
+
+    public function update(ClaseRequest $request, $id) {
+        $clase = Clase::findOrFail($id);
+
+        if (auth()->check() && !auth()->user()->is_admin) {
+            abort(403, 'No autorizado para editar esta clase.');
+        }
+        if ($request->hasFile('video_file') || $request->filled('url_video')) {
+            if ($clase->url_video && !str_starts_with($clase->url_video, 'http') && Storage::disk('public')->exists($clase->url_video)) {
+                Storage::disk('public')->delete($clase->url_video);
+            }
+            if ($request->hasFile('video_file')) {
+                $path = $request->file('video_file')->store('videos', 'public');
+                $clase->url_video = $path;
+            } else {
+                $clase->url_video = $request->url_video;
+            }
+        }
+        $clase->titulo = $request->titulo;
+        $clase->descripcion = $request->descripcion;
+        $clase->disciplina_id = $request->disciplina_id;
+        $clase->nivel = $request->nivel;
+        $clase->save();
+
+        return redirect()->route('clases.show', $clase->id)->with('success', 'Clase actualizada correctamente.');
+    }
+
     public function destroy($id) {
         $clase = Clase::findOrFail($id);
 

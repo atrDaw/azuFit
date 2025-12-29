@@ -1,0 +1,203 @@
+@extends('layout')
+
+@section('title', 'Editar Clase - Azufit')
+
+@section('content')
+<div class="container d-flex align-items-center justify-content-center main-container-centered mt-1">
+    <div class="row justify-content-center w-100">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+
+            <div class="card border-0 shadow-sm rounded-3 bg-white">
+                <div class="card-body p-4 p-md-5">
+
+                    <div class="text-center mb-4">
+                        <h1 class="h3 fw-bold mb-1">Editar Clase</h1>
+                        <p class="small text-muted-color mb-0">Modifica los detalles de la sesión grabada.</p>
+                    </div>
+
+                    <form class="needs-validation" novalidate action="{{ route('clases.update', $clase->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        {{-- Título --}}
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label small fw-bold text-muted-color">Título de la Clase</label>
+                            <input type="text" class="form-control rounded-3 py-2" id="titulo" name="titulo" value="{{ old('titulo', $clase->titulo) }}" placeholder="Ej: Pilates Mañanero" required>
+                            <div class="invalid-feedback">Por favor introduce un título.</div>
+                            @error('titulo')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            {{-- Disciplina --}}
+                            <div class="col-md-6">
+                                <label for="disciplina_id" class="form-label small fw-bold text-muted-color">Disciplina</label>
+                                <select class="form-select rounded-3 py-2" id="disciplina_id" name="disciplina_id" required>
+                                    <option value="" disabled>Seleccionar...</option>
+                                    @foreach($disciplinas as $disciplina)
+                                    <option value="{{ $disciplina->id }}" {{ old('disciplina_id', $clase->disciplina_id) == $disciplina->id ? 'selected' : '' }}>
+                                        {{ $disciplina->nombre }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">Selecciona una disciplina.</div>
+                                @error('disciplina_id')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Nivel --}}
+                            <div class="col-md-6">
+                                <label for="nivel" class="form-label small fw-bold text-muted-color">Nivel</label>
+                                <select class="form-select rounded-3 py-2" id="nivel" name="nivel" required>
+                                    <option value="" disabled>Seleccionar...</option>
+                                    <option value="Principiante" {{ old('nivel', $clase->nivel) == 'Principiante' ? 'selected' : '' }}>Principiante</option>
+                                    <option value="Intermedio" {{ old('nivel', $clase->nivel) == 'Intermedio' ? 'selected' : '' }}>Intermedio</option>
+                                    <option value="Avanzado" {{ old('nivel', $clase->nivel) == 'Avanzado' ? 'selected' : '' }}>Avanzado</option>
+                                </select>
+                                <div class="invalid-feedback">Selecciona un nivel.</div>
+                                @error('nivel')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- Descripción --}}
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label small fw-bold text-muted-color">Descripción</label>
+                            <textarea class="form-control rounded-3 py-2" id="descripcion" name="descripcion" rows="3" placeholder="Describe brevemente la sesión..." required>{{ old('descripcion', $clase->descripcion) }}</textarea>
+                            <div class="invalid-feedback">Añade una descripción.</div>
+                            @error('descripcion')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Video (Estilizado) --}}
+                        <div class="mb-4">
+                            <label class="form-label small fw-bold text-muted-color d-block mb-2">Contenido de la Clase</label>
+
+                            {{-- Información del video actual --}}
+                            <div class="alert alert-light border d-flex align-items-center gap-3 mb-3 p-2 rounded-3">
+                                <span class="material-symbols-outlined text-primary-color ms-2">video_library</span>
+                                <div class="small text-truncate" style="max-width: 90%;">
+                                    <strong>Actual:</strong> {{ $clase->url_video }}
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-light rounded-3 border-0">
+                                {{-- Lógica para determinar qué radio checkear por defecto --}}
+                                @php
+                                    $esUrl = str_starts_with($clase->url_video, 'http');
+                                    // Si hay un old value (error de validación), tiene prioridad. Si no, usamos el valor de la BD.
+                                    $sourceCheck = old('video_source', $esUrl ? 'url' : 'file');
+                                @endphp
+
+                                {{-- Selector visual --}}
+                                <div class="d-flex gap-4 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="video_source" id="source_url" value="url" 
+                                            {{ $sourceCheck == 'url' ? 'checked' : '' }} onclick="toggleVideoInput('url')">
+                                        <label class="form-check-label small text-muted-color" for="source_url" style="cursor: pointer;">
+                                            Enlace YouTube
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="video_source" id="source_file" value="file" 
+                                            {{ $sourceCheck == 'file' ? 'checked' : '' }} onclick="toggleVideoInput('file')">
+                                        <label class="form-check-label small text-muted-color" for="source_file" style="cursor: pointer;">
+                                            Subir Archivo
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {{-- Input URL --}}
+                                <div id="input_url_container" class="{{ $sourceCheck == 'url' ? '' : 'd-none' }}">
+                                    {{-- Pre-rellenamos solo si es una URL --}}
+                                    <input class="form-control rounded-3 py-2" type="url" name="url_video" id="url_video" 
+                                           value="{{ old('url_video', $esUrl ? $clase->url_video : '') }}" placeholder="https://youtube.com/...">
+                                    <div class="invalid-feedback">
+                                        Por favor, introduce una URL válida de YouTube.
+                                    </div>
+                                    @error('url_video') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                                </div>
+
+                                {{-- Input Archivo --}}
+                                <div id="input_file_container" class="{{ $sourceCheck == 'file' ? '' : 'd-none' }}">
+                                    <input class="form-control rounded-3 py-2" type="file" name="video_file" id="video_file" accept="video/*">
+                                    <div class="form-text small mt-1">Deja vacío para mantener el archivo actual.</div>
+                                    @error('video_file') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mb-4">
+                            <button class="btn btn-primary rounded-3 py-2 fw-bold shadow-sm" type="submit">
+                                Actualizar Clase
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center my-3">
+                <a href="{{ route('clases.index') }}" class="small text-muted-color text-decoration-none d-flex align-items-center justify-content-center gap-1">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+                    Cancelar y volver
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // Lógica para alternar inputs de video
+    function toggleVideoInput(source) {
+        const urlContainer = document.getElementById('input_url_container');
+        const fileContainer = document.getElementById('input_file_container');
+        const urlInput = document.getElementById('url_video');
+        const fileInput = document.getElementById('video_file');
+
+        if (source === 'url') {
+            urlContainer.classList.remove('d-none');
+            fileContainer.classList.add('d-none');
+            // En editar NO borramos el valor al cambiar, por si el usuario se arrepiente y vuelve a la pestaña anterior
+            // fileInput.value = ''; 
+        } else {
+            urlContainer.classList.add('d-none');
+            fileContainer.classList.remove('d-none');
+            // urlInput.value = '';
+        }
+    }
+
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    
+                    // Validación personalizada para video
+                    const videoSource = document.querySelector('input[name="video_source"]:checked').value;
+                    const urlInput = document.getElementById('url_video');
+                    
+                    // En Editar, "File" puede ir vacío (significa mantener actual), así que solo validamos URL
+                    if (videoSource === 'url' && !urlInput.value) {
+                        urlInput.setCustomValidity('Introduce una URL válida');
+                    } else {
+                        urlInput.setCustomValidity('');
+                    }
+
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+@endsection

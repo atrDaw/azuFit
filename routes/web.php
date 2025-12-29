@@ -26,11 +26,12 @@ Route::middleware('auth')->group(function () {
         return view('dashboard')->name('dashboard');
     });
     
+    Route::get('/clases/{id}', [ClaseController::class, 'show'])->name('clases.show');
     Route::get('/clases/create', [ClaseController::class, 'create'])->name('clases.create');
     Route::post('/clases', [ClaseController::class, 'store'])->name('clases.store');
     route::get('/clases/{id}/edit', [ClaseController::class, 'edit'])->name('clases.edit');
+    route::put('/clases/{id}', [ClaseController::class, 'update'])->name('clases.update');
     route::delete('/clases/{id}/destroy', [ClaseController::class, 'destroy'])->name('clases.destroy');
-    Route::get('/clases/{id}', [ClaseController::class, 'show'])->name('clases.show');
 
     Route::get('/reservas', [ReservaController::class, 'index'])->name('reservas.index');
     Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');
@@ -38,5 +39,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/sesiones', [SesionController::class, 'index'])->name('sesiones.index');
     Route::get('/sesiones/create', [SesionController::class, 'create'])->name('sesiones.create');
+    Route::get('/sesiones/{id}/edit', [SesionController::class, 'edit'])->name('sesiones.edit');
+    Route::put('/sesiones/{id}', [SesionController::class, 'update'])->name('sesiones.update');
     Route::post('/sesiones', [SesionController::class, 'store'])->name('sesiones.store');
 });

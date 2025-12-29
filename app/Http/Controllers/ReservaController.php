@@ -24,8 +24,18 @@ class ReservaController extends Controller {
         $existe = Reserva::where('user_id', $user->id)
             ->where('sesion_id', $request->sesion_id)
             ->exists();
-        if ($existe) {
+        $cancelada = Reserva::where('user_id', $user->id)
+            ->where('sesion_id', $request->sesion_id)
+            ->where('estado', 'cancelada')
+            ->exists();
+        if ($existe && !$cancelada) {
             return back()->with('error', 'Ya tienes una reserva para esta sesión.');
+        } else if ($cancelada) {
+            Reserva::where('user_id', $user->id)
+                ->where('sesion_id', $request->sesion_id)
+                ->where('estado', 'cancelada')
+                ->update(['estado' => 'pendiente']);
+            return redirect()->back()->with('success', 'Reserva reactivada con éxito.');
         }
         Reserva::create([
             'user_id' => $user->id,

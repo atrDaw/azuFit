@@ -19,7 +19,7 @@ class ClaseRequest extends FormRequest {
      */
     public function rules(): array {
         return [
-            'titulo' => 'required|string|min:2|max:20',
+            'titulo' => 'required|string|min:2|max:30',
             'descripcion' => 'required|string|min:10|max:255',
             'disciplina_id' => 'required|exists:disciplinas,id',
             'nivel' => 'required|in:Principiante,Intermedio,Avanzado',
@@ -31,7 +31,7 @@ class ClaseRequest extends FormRequest {
         return [
             'titulo.required' => 'El título es obligatorio.',
             'titulo.min' => 'El título debe tener mínimo 2 caracteres.',
-            'titulo.max' => 'El título debe tener máximo 20 caracteres.',
+            'titulo.max' => 'El título debe tener máximo 30 caracteres.',
 
             'descripcion.required' => 'La descripción es obligatoria.',
             'descripcion.min' => 'La descripción debe tener mínimo 10 caracteres.',
