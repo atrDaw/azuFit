@@ -20,7 +20,7 @@
           <a class="nav-link fw-medium" href="{{route('clases.index')}}">Clases Online</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fw-medium" href="#">Clases Privadas</a>
+          <a class="nav-link fw-medium" href="{{route('sesiones.index')}}">Clases Privadas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link fw-medium" href="#">Sobre Nosotros</a>

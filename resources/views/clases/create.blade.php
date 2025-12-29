@@ -3,7 +3,7 @@
 @section('title','Nueva Clase - Azufit')
 
 @section('content')
-<div class="container d-flex align-items-center justify-content-center main-container-centered mt-3">
+<div class="container d-flex align-items-center justify-content-center main-container-centered mt-1">
     <div class="row justify-content-center w-100">
         <div class="col-12 col-md-10 col-lg-8 col-xl-6">
 

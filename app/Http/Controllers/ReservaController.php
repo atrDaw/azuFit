@@ -30,10 +30,10 @@ class ReservaController extends Controller {
         Reserva::create([
             'user_id' => $user->id,
             'sesion_id' => $request->sesion_id,
-            'estado' => 'confirmada',
+            'estado' => 'pendiente',
             //gestionar mail enviado
         ]);
-        return redirect()->route('reservas.index')->with('success', 'Reserva creada con éxito.');
+        return redirect()->back()->with('success', 'Reserva creada con éxito.');
     }
 
     public function destroy($id) {

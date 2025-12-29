@@ -11,7 +11,16 @@
         <p class="lead text-muted-color mx-auto" style="max-width: 700px;">
             Explora nuestra biblioteca de vídeos y entrena a tu ritmo desde cualquier lugar.
         </p>
+        @if(auth()->user() && auth()->user()->isAdmin)
+        <div class="mt-4">
+            <a href="{{ route('clases.create') }}" class="btn btn-primary rounded-pill px-4 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow-sm hover-scale">
+                <span class="material-symbols-outlined">add_circle</span>
+                Crear Nueva Clase
+            </a>
+        </div>
+        @endif
     </div>
+
 
 
     <div class="row g-4">

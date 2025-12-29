@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder {
             RolesTableSeeder::class,
             DisciplinasTableSeeder::class,
             UsersTableSeeder::class,
+            SesionesTableSeeder::class,
+            ClaseSeeder::class,
         ]);
     }
 }

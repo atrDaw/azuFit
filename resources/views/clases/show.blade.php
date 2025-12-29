@@ -77,7 +77,7 @@
                                 Editar
                             </a>
                             {{-- Formulario para borrar --}}
-                            <form action="{{ route('clases.destroy', $clase->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de borrar esta clase?');">
+                            <form action="{{ route('clases.destroy', $clase->id) }}" method="POST" class="form-eliminar">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger btn-sm rounded-3 d-flex align-items-center gap-1">
                                     <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
@@ -104,4 +104,35 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Seleccionamos todos los formularios con la clase 'form-eliminar'
+        const forms = document.querySelectorAll('.form-eliminar');
+
+        forms.forEach(form => {
+            form.addEventListener('submit', function (e) {
+                // 1. Detenemos el envío automático
+                e.preventDefault();
+
+                // 2. Mostramos la alerta
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esta acción!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33', // Rojo peligro
+                    cancelButtonColor: '#3085d6', // Azul estándar (o usa tu color corporativo #4a908a)
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    // 3. Si el usuario confirma, enviamos el formulario manualmente
+                    if (result.isConfirmed) {
+                        this.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
 @endsection
