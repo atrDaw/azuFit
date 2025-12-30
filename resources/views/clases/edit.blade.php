@@ -142,7 +142,7 @@
             </div>
 
             <div class="text-center my-3">
-                <a href="{{ route('clases.index') }}" class="small text-muted-color text-decoration-none d-flex align-items-center justify-content-center gap-1">
+                <a href="{{ route('clases.show', $clase->id) }}" class="small text-muted-color text-decoration-none d-flex align-items-center justify-content-center gap-1">
                     <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
                     Cancelar y volver
                 </a>

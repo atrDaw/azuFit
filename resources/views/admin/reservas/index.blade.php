@@ -4,14 +4,14 @@
 
 @section('content')
 <div class="container py-5">
-    
+
     {{-- Cabecera --}}
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
         <div>
             <h1 class="h3 fw-bold text-dark mb-1">Solicitudes de Reserva</h1>
             <p class="text-muted small mb-0">Gestiona las citas y solicitudes de tus alumnos.</p>
         </div>
-        
+
         <div class="d-flex gap-2 ">
             {{-- Enlace para volver al calendario --}}
             <a href="{{ route('sesiones.index') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold d-inline-flex align-items-center justify-content-center gap-2 shadow-sm hover-scale flex-grow-1 flex-md-grow-0">
@@ -43,9 +43,6 @@
                             {{-- ALUMNO --}}
                             <td class="ps-4">
                                 <div class="d-flex align-items-center gap-2">
-                                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 35px; height: 35px;">
-                                        {{ substr($reserva->user->name, 0, 1) }}
-                                    </div>
                                     <div class="lh-1">
                                         <div class="fw-bold text-dark">{{ $reserva->user->name }} {{ $reserva->user->surname }}</div>
                                         <small class="text-muted">{{ $reserva->user->email }}</small>
@@ -76,45 +73,45 @@
                             {{-- ESTADO --}}
                             <td>
                                 @if($reserva->estado === 'pendiente')
-                                    <span class="badge bg-warning text-dark rounded-pill px-3">Pendiente</span>
+                                <span class="badge bg-warning text-dark rounded-pill px-3">Pendiente</span>
                                 @elseif($reserva->estado === 'confirmada')
-                                    <span class="badge bg-success rounded-pill px-3">Confirmada</span>
+                                <span class="badge bg-success rounded-pill px-3">Confirmada</span>
                                 @else
-                                    <span class="badge bg-danger rounded-pill px-3">Cancelada</span>
+                                <span class="badge bg-danger rounded-pill px-3">Cancelada</span>
                                 @endif
                             </td>
 
                             {{-- ACCIONES --}}
                             <td class="pe-4 text-end">
                                 @if($reserva->estado === 'pendiente')
-                                    <div class="d-flex justify-content-end gap-2">
-                                        <form action="{{ route('reservas.update', $reserva->id) }}" method="POST">
-                                            @csrf @method('PUT')
-                                            <input type="hidden" name="estado" value="confirmada">
-                                            <button type="submit" class="btn btn-success btn-sm rounded-circle shadow-sm hover-scale" title="Aceptar reserva">
-                                                <span class="material-symbols-outlined" style="font-size: 18px;">check</span>
-                                            </button>
-                                        </form>
-
-                                        <form action="{{ route('reservas.update', $reserva->id) }}" method="POST">
-                                            @csrf @method('PUT')
-                                            <input type="hidden" name="estado" value="cancelada">
-                                            <button type="submit" class="btn btn-outline-danger btn-sm rounded-circle hover-scale" title="Rechazar reserva">
-                                                <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                @elseif($reserva->estado === 'confirmada')
-                                    {{-- Formulario cancelar con clase 'form-cancelar' para SweetAlert --}}
-                                    <form action="{{ route('reservas.update', $reserva->id) }}" method="POST" class="d-inline form-cancelar">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <form action="{{ route('reservas.update', $reserva->id) }}" method="POST">
                                         @csrf @method('PUT')
-                                        <input type="hidden" name="estado" value="cancelada">
-                                        <button type="submit" class="btn btn-link text-danger p-0 small text-decoration-none" title="Cancelar">
-                                            Cancelar
+                                        <input type="hidden" name="estado" value="confirmada">
+                                        <button type="submit" class="btn btn-success btn-sm rounded-circle shadow-sm hover-scale" title="Aceptar reserva">
+                                            <span class="material-symbols-outlined" style="font-size: 18px;">check</span>
                                         </button>
                                     </form>
+
+                                    <form action="{{ route('reservas.update', $reserva->id) }}" method="POST">
+                                        @csrf @method('PUT')
+                                        <input type="hidden" name="estado" value="cancelada">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-circle hover-scale" title="Rechazar reserva">
+                                            <span class="material-symbols-outlined" style="font-size: 18px;">close</span>
+                                        </button>
+                                    </form>
+                                </div>
+                                @elseif($reserva->estado === 'confirmada')
+                                {{-- Formulario cancelar con clase 'form-cancelar' para SweetAlert --}}
+                                <form action="{{ route('reservas.update', $reserva->id) }}" method="POST" class="d-inline form-cancelar">
+                                    @csrf @method('PUT')
+                                    <input type="hidden" name="estado" value="cancelada">
+                                    <button type="submit" class="btn btn-link text-danger p-0 small text-decoration-none" title="Cancelar">
+                                        Cancelar
+                                    </button>
+                                </form>
                                 @else
-                                    <span class="text-muted small fst-italic">Finalizada</span>
+                                <span class="text-muted small fst-italic">Finalizada</span>
                                 @endif
                             </td>
                         </tr>
@@ -142,26 +139,23 @@
         @forelse($reservas as $reserva)
         <div class="card border-0 shadow-sm rounded-3 mb-3">
             <div class="card-body p-3">
-                
+
                 {{-- Cabecera Tarjeta: Usuario y Estado --}}
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div class="d-flex align-items-center gap-2">
-                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px;">
-                            {{ substr($reserva->user->name, 0, 1) }}
-                        </div>
                         <div class="lh-1">
                             <div class="fw-bold text-dark">{{ $reserva->user->name }}</div>
                             <small class="text-muted" style="font-size: 0.75rem;">{{ $reserva->user->surname }}</small>
                         </div>
                     </div>
-                    
+
                     <div>
                         @if($reserva->estado === 'pendiente')
-                            <span class="badge bg-warning text-dark rounded-pill">Pendiente</span>
+                        <span class="badge bg-warning text-dark rounded-pill">Pendiente</span>
                         @elseif($reserva->estado === 'confirmada')
-                            <span class="badge bg-success rounded-pill">Confirmada</span>
+                        <span class="badge bg-success rounded-pill">Confirmada</span>
                         @else
-                            <span class="badge bg-danger rounded-pill">Cancelada</span>
+                        <span class="badge bg-danger rounded-pill">Cancelada</span>
                         @endif
                     </div>
                 </div>
@@ -187,32 +181,32 @@
                 {{-- Pie Tarjeta: Acciones (Botones Grandes) --}}
                 <div class="d-flex gap-2">
                     @if($reserva->estado === 'pendiente')
-                        <form action="{{ route('reservas.update', $reserva->id) }}" method="POST" class="flex-grow-1">
-                            @csrf @method('PUT')
-                            <input type="hidden" name="estado" value="confirmada">
-                            <button type="submit" class="btn btn-success btn-sm w-100 py-2 d-flex align-items-center justify-content-center gap-1 fw-bold">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">check</span> Aceptar
-                            </button>
-                        </form>
+                    <form action="{{ route('reservas.update', $reserva->id) }}" method="POST" class="flex-grow-1">
+                        @csrf @method('PUT')
+                        <input type="hidden" name="estado" value="confirmada">
+                        <button type="submit" class="btn btn-success btn-sm w-100 py-2 d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">check</span> Aceptar
+                        </button>
+                    </form>
 
-                        <form action="{{ route('reservas.update', $reserva->id) }}" method="POST" class="flex-grow-1">
-                            @csrf @method('PUT')
-                            <input type="hidden" name="estado" value="cancelada">
-                            <button type="submit" class="btn btn-outline-danger btn-sm w-100 py-2 d-flex align-items-center justify-content-center gap-1 fw-bold">
-                                <span class="material-symbols-outlined" style="font-size: 18px;">close</span> Rechazar
-                            </button>
-                        </form>
+                    <form action="{{ route('reservas.update', $reserva->id) }}" method="POST" class="flex-grow-1">
+                        @csrf @method('PUT')
+                        <input type="hidden" name="estado" value="cancelada">
+                        <button type="submit" class="btn btn-outline-danger btn-sm w-100 py-2 d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">close</span> Rechazar
+                        </button>
+                    </form>
                     @elseif($reserva->estado === 'confirmada')
-                        {{-- Formulario cancelar con clase 'form-cancelar' --}}
-                        <form action="{{ route('reservas.update', $reserva->id) }}" method="POST" class="w-100 form-cancelar">
-                            @csrf @method('PUT')
-                            <input type="hidden" name="estado" value="cancelada">
-                            <button type="submit" class="btn btn-outline-secondary btn-sm w-100 py-2 fw-bold">
-                                Cancelar Reserva
-                            </button>
-                        </form>
+                    {{-- Formulario cancelar con clase 'form-cancelar' --}}
+                    <form action="{{ route('reservas.update', $reserva->id) }}" method="POST" class="w-100 form-cancelar">
+                        @csrf @method('PUT')
+                        <input type="hidden" name="estado" value="cancelada">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm w-100 py-2 fw-bold">
+                            Cancelar Reserva
+                        </button>
+                    </form>
                     @else
-                        <button disabled class="btn btn-light text-muted w-100 btn-sm">Finalizada</button>
+                    <button disabled class="btn btn-light text-muted w-100 btn-sm">Finalizada</button>
                     @endif
                 </div>
 
@@ -234,12 +228,12 @@
 
 {{-- SCRIPT SWEETALERT2 --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Seleccionamos todos los formularios marcados con la clase 'form-cancelar'
         const forms = document.querySelectorAll('.form-cancelar');
 
         forms.forEach(form => {
-            form.addEventListener('submit', function (e) {
+            form.addEventListener('submit', function(e) {
                 // Detenemos el envío automático
                 e.preventDefault();
 
