@@ -26,8 +26,6 @@ class ClaseController extends Controller {
     }
 
     public function store(ClaseRequest $request) {
-        // Lógica para almacenar una nueva clase 
-        // $datos=$request->validated();
         $clase = new Clase();
         if ($request->hasFile('video_file')) {
             $path = $request->file('video_file')->store('videos', 'public');

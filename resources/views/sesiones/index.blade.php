@@ -11,14 +11,22 @@
         <p class="lead text-muted-color mx-auto" style="max-width: 700px;">
             Reserva tu plaza y entrena con nosotros en tiempo real.
         </p>
+
+        @auth
+        {{-- Botones de Gestión Global para Admin --}}
         @if(auth()->user()->isAdmin)
-        <div class="mt-4">
+        <div class="mt-4 d-flex justify-content-center gap-3">
             <a href="{{ route('sesiones.create') }}" class="btn btn-primary rounded-pill px-4 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow-sm hover-scale">
                 <span class="material-symbols-outlined">add_circle</span>
                 Programar Sesión
             </a>
+            <a href="{{ route('admin.reservas.index') }}" class="btn btn-dark rounded-pill px-4 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow-sm hover-scale">
+                <span class="material-symbols-outlined">inbox</span>
+                Gestionar Solicitudes
+            </a>
         </div>
         @endif
+        @endauth
     </div>
 
     {{-- Lista de Sesiones (Estilo Agenda) --}}
@@ -43,9 +51,9 @@
                         {{-- Columna Hora --}}
                         <div class="bg-light p-3 d-flex flex-column justify-content-center align-items-center text-center" style="min-width: 120px;">
                             <span class="h4 fw-bold mb-0 text-dark">
-                                {{ \Carbon\Carbon::parse($sesion->fecha_hora)->format('H:i') }}
+                                {{ $sesion->fecha_hora->format('H:i') }}
                             </span>
-                            <span class="small text-muted text-uppercase">Horas</span>
+
                         </div>
 
                         {{-- Columna Info --}}
@@ -54,6 +62,10 @@
                                 <span class="badge bg-opacity-50 bg-primary rounded-pill small">
                                     {{ $sesion->disciplina->nombre }}
                                 </span>
+                                {{-- Etiqueta extra para el admin si está ocupada --}}
+                                @if($sesion->esta_ocupada && auth()->check() && auth()->user()->isAdmin)
+                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger">Ocupada</span>
+                                @endif
                             </div>
                             <h5 class="fw-bold mb-0 text-dark">{{ $sesion->titulo }}</h5>
                         </div>
@@ -61,25 +73,46 @@
                         {{-- Columna Acción --}}
                         <div class="p-3 d-flex flex-column align-items-md-end justify-content-center bg-white border-start border-light gap-2" style="min-width: 200px;">
 
-                            {{-- TRUCO: Usamos @forelse sobre la colección ya filtrada por el controlador --}}
-                            {{-- Como solo traemos TU reserva, este bucle se ejecuta máximo 1 vez --}}
-                            @forelse($sesion->reservas as $miReserva)
+                            @auth
+                            {{-- LÓGICA DIFERENCIADA: ADMIN vs USUARIO --}}
+                            @if(auth()->user()->isAdmin)
 
-                            {{-- CASO A: SI ENTRA AQUÍ, ES QUE TIENES RESERVA --}}
+                            {{-- VISTA ADMIN: Botones de gestión --}}
+                            <div class="d-flex gap-2 w-100 justify-content-end">
+                                {{-- Editar --}}
+                                <a href="{{ route('sesiones.edit', $sesion->id) }}" class="btn btn-outline-secondary btn-sm rounded-3 d-flex align-items-center gap-1" title="Editar Sesión">
+                                    <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                                    Editar
+                                </a>
+
+                                {{-- Borrar --}}
+                                <form action="{{ route('sesiones.destroy', $sesion->id) }}" method="POST" class="form-eliminar">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-3 d-flex align-items-center gap-1 " title="Eliminar Sesión">
+                                        <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+                                        Borrar
+                                    </button>
+                                </form>
+                            </div>
+
+                            @else
+                            {{-- VISTA USUARIO: Lógica de reserva normal --}}
+
+                            @forelse($sesion->reservas as $miReserva)
+                            {{-- CASO A: TIENE RESERVA --}}
                             @if($miReserva->estado === 'confirmada')
-                            {{-- 1. CONFIRMADA --}}
                             <div class="d-flex align-items-center text-success mb-1 small">
                                 <span class="material-symbols-outlined me-1" style="font-size: 18px;">check_circle</span>
                                 <span class="fw-bold">Confirmada</span>
                             </div>
-                            <a href="http://www.google.com"
+                            <a href="{{$miReserva->sesion->url_sesion}}" target="_blank"
                                 class="btn btn-success text-white w-100 rounded-3 fw-bold px-3 btn-sm d-flex align-items-center justify-content-center gap-2 shadow-sm hover-scale">
                                 <span class="material-symbols-outlined" style="font-size: 20px;">videocam</span>
                                 Entrar
                             </a>
 
                             @elseif($miReserva->estado === 'pendiente')
-                            {{-- 2. PENDIENTE --}}
                             <div class="d-flex align-items-center text-warning mb-1 small">
                                 <span class="material-symbols-outlined me-1" style="font-size: 18px;">hourglass_top</span>
                                 <span class="fw-bold">Pendiente</span>
@@ -90,7 +123,6 @@
                             </button>
 
                             @elseif($miReserva->estado === 'cancelada')
-                            {{-- 3. CANCELADA --}}
                             <div class="d-flex align-items-center text-danger mb-1 small">
                                 <span class="material-symbols-outlined me-1" style="font-size: 18px;">cancel</span>
                                 <span class="fw-bold">Cancelada</span>
@@ -106,18 +138,34 @@
                             @endif
 
                             @empty
-                            {{-- CASO B: SI ENTRA AQUÍ (EMPTY), NO TIENES RESERVA --}}
+                            {{-- CASO B: NO TIENE RESERVA --}}
+                            {{-- Aquí comprobamos si está ocupada por otro (exclusividad) --}}
+                            @if($sesion->esta_ocupada)
+                            <button disabled class="btn btn-secondary w-100 rounded-3 fw-bold px-3 btn-sm d-flex align-items-center justify-content-center gap-2 opacity-50" title="Sesión reservada por otro usuario">
+                                <span class="material-symbols-outlined" style="font-size: 20px;">block</span>
+                                Ocupada
+                            </button>
+                            @else
                             <form action="{{ route('reservas.store') }}" method="POST" class="w-100">
                                 @csrf
                                 <input type="hidden" name="sesion_id" value="{{ $sesion->id }}">
-
                                 <button type="submit" class="btn btn-outline-primary w-100 rounded-3 fw-bold px-3 btn-sm transition-all hover-scale d-flex align-items-center justify-content-center gap-2">
                                     <span class="material-symbols-outlined" style="font-size: 20px;">calendar_add_on</span>
                                     Solicitar Plaza
                                 </button>
                             </form>
+                            @endif
                             @endforelse
 
+                            @endif
+
+                            @else
+                            {{-- NO LOGUEADO --}}
+                            <a href="{{ route('login') }}" class="btn btn-light text-muted w-100 rounded-3 px-3 btn-sm d-flex align-items-center justify-content-center gap-2 border">
+                                <span class="material-symbols-outlined" style="font-size: 18px;">login</span>
+                                Inicia sesión
+                            </a>
+                            @endauth
 
                         </div>
 
@@ -138,5 +186,32 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Seleccionamos todos los formularios con la clase 'form-eliminar'
+        const forms = document.querySelectorAll('.form-eliminar');
+
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esta acción!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
 
 @endsection

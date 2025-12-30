@@ -22,12 +22,13 @@
         <li class="nav-item">
           <a class="nav-link fw-medium" href="{{route('sesiones.index')}}">Clases Privadas</a>
         </li>
+        @auth
+        @if(auth()->user()->isAdmin)
         <li class="nav-item">
-          <a class="nav-link fw-medium" href="#">Sobre Nosotros</a>
+          <a class="nav-link fw-medium" href="{{route('admin.reservas.index')}}">Panel de Reservas</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link fw-medium" href="#">Testimonios</a>
-        </li>
+        @endif
+        @endauth
       </ul>
 
       <div class="d-flex justify-content-center align-items-center mt-3 mt-md-0">

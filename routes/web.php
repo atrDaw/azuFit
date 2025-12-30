@@ -22,12 +22,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 route::get('/clases', [ClaseController::class, 'index'])->name('clases.index');
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', function () {
-        return view('dashboard')->name('dashboard');
-    });
-    
-    Route::get('/clases/{id}', [ClaseController::class, 'show'])->name('clases.show');
+
     Route::get('/clases/create', [ClaseController::class, 'create'])->name('clases.create');
+    Route::get('/clases/{id}', [ClaseController::class, 'show'])->name('clases.show');
     Route::post('/clases', [ClaseController::class, 'store'])->name('clases.store');
     route::get('/clases/{id}/edit', [ClaseController::class, 'edit'])->name('clases.edit');
     route::put('/clases/{id}', [ClaseController::class, 'update'])->name('clases.update');
@@ -36,10 +33,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/reservas', [ReservaController::class, 'index'])->name('reservas.index');
     Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');
     Route::delete('/reservas/{id}/destroy', [ReservaController::class, 'destroy'])->name('reservas.destroy');
-    
+
+    //admin panel reservas
+    Route::get('/admin/reservas', [ReservaController::class, 'panel'])->name('admin.reservas.index');
+    Route::put('/reservas/{id}', [ReservaController::class, 'update'])->name('reservas.update');
+
     Route::get('/sesiones', [SesionController::class, 'index'])->name('sesiones.index');
     Route::get('/sesiones/create', [SesionController::class, 'create'])->name('sesiones.create');
     Route::get('/sesiones/{id}/edit', [SesionController::class, 'edit'])->name('sesiones.edit');
     Route::put('/sesiones/{id}', [SesionController::class, 'update'])->name('sesiones.update');
     Route::post('/sesiones', [SesionController::class, 'store'])->name('sesiones.store');
+    Route::delete('/sesiones/{id}', [SesionController::class, 'destroy'])->name('sesiones.destroy');   
+    
 });
