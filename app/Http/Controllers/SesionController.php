@@ -22,7 +22,7 @@ class SesionController extends Controller {
             ->get();
 
         $sesionesPorDia = $sesiones->groupBy(function ($fecha) {
-            return Carbon::parse($fecha->fecha_hora)->locale('es')->isoFormat('dddd D [de] MMMM');
+            return $fecha->fecha_hora->locale('es')->isoFormat('dddd D [de] MMMM');
         });
         return view('sesiones.index', compact('sesionesPorDia'));
     }

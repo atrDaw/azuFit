@@ -64,7 +64,7 @@
                             <label for="url_sesion" class="form-label small fw-bold text-muted-color">Enlace de la Reunión (Zoom/Meet)</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 text-muted"><span class="material-symbols-outlined" style="font-size: 18px;">link</span></span>
-                                <input type="url" class="form-control rounded-end-3 py-2 border-start-0 ps-0" id="url_sesion" name="url_sesion" value="{{ old('url_sesion') }}" placeholder="https://zoom.us/j/..." required>
+                                <input type="url" class="form-control rounded-end-3 py-2 border-start-0 ps-0" id="url_sesion" name="url_sesion" value="{{ old('url_sesion') }}" placeholder="https://zoom.us/j/..." >
                                 <div class="invalid-feedback">Introduce una URL válida para la videollamada.</div>
                             </div>
                             <div class="form-text small mt-1">Este enlace se enviará a los usuarios que reserven.</div>
