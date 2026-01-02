@@ -21,16 +21,16 @@ class ReservaController extends Controller {
         ]);
 
         $user = Auth::user();
-        $sesion= SesionEnDirecto::findOrFail($request->sesion_id);
+        $sesion = SesionEnDirecto::findOrFail($request->sesion_id);
 
-        if($sesion->reservas()->where('estado','confirmada')->exists()){
+        if ($sesion->reservas()->where('estado', 'confirmada')->exists()) {
             return back()->with('error', 'Lo siento, esta sesión ya ocupada por otro usuario.');
         }
 
         $existe = Reserva::where('user_id', $user->id)
             ->where('sesion_id', $request->sesion_id)
             ->exists();
-            
+
         $cancelada = Reserva::where('user_id', $user->id)
             ->where('sesion_id', $request->sesion_id)
             ->where('estado', 'cancelada')
@@ -56,21 +56,20 @@ class ReservaController extends Controller {
 
     public function update(Request $request, $id) {
         if (!auth()->user()->is_admin) abort(403);
-        $reserva=Reserva::findOrFail($id);
-        $nuevoEstado=$request->input('estado');
-        if($nuevoEstado==='confirmada'){
-            $yaOcupada=Reserva::where('sesion_id',$reserva->sesion_id)
-                ->where('estado','confirmada')
-                ->where('id','!=',$reserva->id)
+        $reserva = Reserva::findOrFail($id);
+        $nuevoEstado = $request->input('estado');
+        if ($nuevoEstado === 'confirmada') {
+            $yaOcupada = Reserva::where('sesion_id', $reserva->sesion_id)
+                ->where('estado', 'confirmada')
+                ->where('id', '!=', $reserva->id)
                 ->exists();
-            if($yaOcupada){
+            if ($yaOcupada) {
                 return redirect()->back()->with('error', 'No se puede confirmar la reserva porque la sesión ya está ocupada.');
             }
         }
-        $reserva->estado=$nuevoEstado;
+        $reserva->estado = $nuevoEstado;
         $reserva->save();
         return redirect()->back()->with('success', 'Estado de la reserva actualizado.');
-
     }
 
     public function destroy($id) {
@@ -79,12 +78,19 @@ class ReservaController extends Controller {
         return redirect()->route('reservas.index')->with('success', 'Reserva cancelada.');
     }
 
-    public function panel(){
+    public function panel(Request $request) {
         if (!auth()->user()->is_admin) abort(403, 'Acceso denegado');
-         $reservas = Reserva::with(['user', 'sesion.disciplina'])
-            ->orderByRaw("FIELD(estado, 'pendiente', 'confirmada', 'cancelada')")
+
+        $query = Reserva::with(['user', 'sesion.disciplina']);
+
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        $reservas = $query->orderByRaw("FIELD(estado, 'pendiente', 'confirmada', 'cancelada')")
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.reservas.index', compact('reservas'));
     }

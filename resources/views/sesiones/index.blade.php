@@ -29,6 +29,36 @@
         @endauth
     </div>
 
+    {{-- BARRA DE FILTROS --}}
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-3">
+            <div class="card border-0 shadow-sm rounded-3 bg-white">
+                <div class="card-body p-3">
+                    <form action="{{ route('sesiones.index') }}" method="GET" class="d-flex gap-2">
+
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted"><span class="material-symbols-outlined" style="font-size: 20px;">fitness_center</span></span>
+                            <select name="disciplina_id" class="form-select border-start-0 bg-light" onchange="this.form.submit()">
+                                <option value="">Todas las Disciplinas</option>
+                                @foreach($disciplinas as $disciplina)
+                                <option value="{{ $disciplina->id }}" {{ request('disciplina_id') == $disciplina->id ? 'selected' : '' }}>
+                                    {{ $disciplina->nombre }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        @if(request('disciplina_id'))
+                        <a href="{{ route('sesiones.index') }}" class="btn btn-outline-secondary px-3" title="Limpiar filtro">
+                            <span class="material-symbols-outlined" style="vertical-align: middle;">close</span>
+                        </a>
+                        @endif
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Lista de Sesiones (Estilo Agenda) --}}
     <div class="row justify-content-center">
         <div class="col-lg-9">

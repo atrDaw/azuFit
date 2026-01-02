@@ -10,9 +10,21 @@ use Illuminate\Support\Facades\Storage;
 
 
 class ClaseController extends Controller {
-    public function index() {
-        $clases = Clase::with('disciplina')->get();
-        return view('clases.index', compact('clases'));
+    public function index(Request $request) {
+        
+        $query= Clase::with('disciplina');
+
+        if($request->filled('disciplina_id')){
+            $query->where('disciplina_id', $request->disciplina_id);
+        }
+        if($request->filled('nivel')){
+            $query->where('nivel', $request->nivel);
+        }
+
+        $clases = $query->paginate(9)->withQueryString();
+        $disciplinas = Disciplina::all();
+
+        return view('clases.index', compact('clases', 'disciplinas'));
     }
 
     public function show($id) {

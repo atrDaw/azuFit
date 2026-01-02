@@ -20,7 +20,53 @@
         </div>
         @endif
     </div>
+    {{-- BARRA DE FILTROS --}}
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-sm rounded-3 bg-white">
+                <div class="card-body p-3">
+                    <form action="{{ route('clases.index') }}" method="GET" class="row g-2 align-items-center">
 
+                        {{-- Filtro Disciplina --}}
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 text-muted"><span class="material-symbols-outlined" style="font-size: 20px;">fitness_center</span></span>
+                                <select name="disciplina_id" class="form-select border-start-0 bg-light" onchange="this.form.submit()">
+                                    <option value="">Todas las Disciplinas</option>
+                                    @foreach($disciplinas as $disciplina)
+                                    <option value="{{ $disciplina->id }}" {{ request('disciplina_id') == $disciplina->id ? 'selected' : '' }}>
+                                        {{ $disciplina->nombre }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        {{-- Filtro Nivel --}}
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0 text-muted"><span class="material-symbols-outlined" style="font-size: 20px;">signal_cellular_alt</span></span>
+                                <select name="nivel" class="form-select border-start-0 bg-light" onchange="this.form.submit()">
+                                    <option value="">Todos los Niveles</option>
+                                    <option value="Principiante" {{ request('nivel') == 'Principiante' ? 'selected' : '' }}>Principiante</option>
+                                    <option value="Intermedio" {{ request('nivel') == 'Intermedio' ? 'selected' : '' }}>Intermedio</option>
+                                    <option value="Avanzado" {{ request('nivel') == 'Avanzado' ? 'selected' : '' }}>Avanzado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {{-- Botones Acción --}}
+                        <div class="col-md-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary w-100 fw-bold rounded-3">Filtrar</button>
+                            @if(request('disciplina_id') || request('nivel'))
+                            <a href="{{ route('clases.index') }}" class="btn btn-outline-secondary w-100 fw-bold rounded-3">Limpiar</a>
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="row g-4">
@@ -78,7 +124,7 @@
                             Inicia sesión para ver
                             @endauth
                         </a>
-                        
+
                     </div>
                 </div>
             </div>

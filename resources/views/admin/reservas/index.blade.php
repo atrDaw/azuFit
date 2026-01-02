@@ -20,6 +20,35 @@
             </a>
         </div>
     </div>
+    {{-- BARRA DE FILTROS (Estilo Unificado) --}}
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-3 bg-white">
+                <div class="card-body p-3">
+                    <form action="{{ route('admin.reservas.index') }}" method="GET" class="d-flex gap-2">
+
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted">
+                                <span class="material-symbols-outlined" style="font-size: 20px;">filter_list</span>
+                            </span>
+                            <select name="estado" class="form-select border-start-0 bg-light" onchange="this.form.submit()">
+                                <option value="">Todos los Estados</option>
+                                <option value="pendiente" {{ request('estado') == 'pendiente' ? 'selected' : '' }}>Pendientes</option>
+                                <option value="confirmada" {{ request('estado') == 'confirmada' ? 'selected' : '' }}>Confirmadas</option>
+                                <option value="cancelada" {{ request('estado') == 'cancelada' ? 'selected' : '' }}>Canceladas</option>
+                            </select>
+                        </div>
+
+                        @if(request('estado'))
+                        <a href="{{ route('admin.reservas.index') }}" class="btn btn-outline-secondary px-3 d-flex align-items-center" title="Limpiar filtro">
+                            <span class="material-symbols-outlined">close</span>
+                        </a>
+                        @endif
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- ================================================================== --}}
     {{-- VISTA DE ESCRITORIO (Visible en pantallas medianas y grandes)      --}}

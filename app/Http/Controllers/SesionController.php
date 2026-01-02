@@ -10,21 +10,37 @@ use App\Models\Disciplina;
 
 class SesionController extends Controller {
 
-    public function index() {
+    public function index(Request $request) {
         $userId = auth()->id();
-        $sesiones = SesionEnDirecto::with(['disciplina', 'reservas' => function ($query) use ($userId) { //añadir user id para ver si el usuario tiene reserva para mostrar estado
+
+        $query = SesionEnDirecto::with(['disciplina', 'reservas' => function ($query) use ($userId) { //añadir user id para ver si el usuario tiene reserva para mostrar estado
             if ($userId) {
                 $query->where('user_id', $userId);
             }
-        }])
-            ->where('fecha_hora', '>=', now())
-            ->orderBy('fecha_hora', 'asc')
-            ->get();
+        }]);    
 
-        $sesionesPorDia = $sesiones->groupBy(function ($fecha) {
-            return $fecha->fecha_hora->locale('es')->isoFormat('dddd D [de] MMMM [de] YYYY');
+        $query->where('fecha_hora', '>=', now());   
+
+        if ($request->filled('disciplina_id')) {
+            $query->where('disciplina_id', $request->disciplina_id);
+        }
+
+        $sesiones = $query->orderBy('fecha_hora', 'asc')->get();
+
+        // $sesiones = SesionEnDirecto::with(['disciplina', 'reservas' => function ($query) use ($userId) { //añadir user id para ver si el usuario tiene reserva para mostrar estado
+        //     if ($userId) {
+        //         $query->where('user_id', $userId);
+        //     }
+        // }])
+        //     ->where('fecha_hora', '>=', now())
+        //     ->orderBy('fecha_hora', 'asc')
+        //     ->get();
+
+        $sesionesPorDia = $sesiones->groupBy(function ($sesion) {
+            return $sesion->fecha_hora->locale('es')->isoFormat('dddd D [de] MMMM [de] YYYY');
         });
-        return view('sesiones.index', compact('sesionesPorDia'));
+        $disciplinas = Disciplina::all();
+        return view('sesiones.index', compact('sesionesPorDia', 'disciplinas'));
     }
 
     public function show($id) {
