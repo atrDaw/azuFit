@@ -20,7 +20,7 @@
 <body>
     <div class="d-flex flex-column min-vh-100">
 
-        <header>@include('partials.header')</header>
+        <header class="sticky-top">@include('partials.header')</header>
 
         <main>@yield('content')</main>
 

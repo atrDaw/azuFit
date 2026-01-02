@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md sticky-top shadow-sm px-4 py-3">
+<nav class="navbar navbar-expand-md shadow-sm px-4 py-3">
   <div class="container-fluid">
 
     <a class="navbar-brand d-flex align-items-center gap-2" href="{{route('home')}}">
