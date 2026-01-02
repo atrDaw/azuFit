@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Reserva;
 use App\Models\SesionEnDirecto;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewRequestAdminEmail;
+use App\Mail\ReservationConfirmedEmail;
+
 
 class ReservaController extends Controller {
     public function index() {
@@ -39,25 +43,33 @@ class ReservaController extends Controller {
         if ($existe && !$cancelada) {
             return back()->with('error', 'Ya tienes una solicitud para esta sesión.');
         } else if ($cancelada) {
-            Reserva::where('user_id', $user->id)
+            $reserva = Reserva::where('user_id', $user->id)
                 ->where('sesion_id', $request->sesion_id)
                 ->where('estado', 'cancelada')
-                ->update(['estado' => 'pendiente']);
+                ->first();
+            $reserva->update(['estado' => 'pendiente']);
+            $this->enviarMailAdmin($reserva);
             return redirect()->back()->with('success', 'Reserva reactivada con éxito.');
         }
-        Reserva::create([
+
+        $reserva = Reserva::create([
             'user_id' => $user->id,
             'sesion_id' => $request->sesion_id,
             'estado' => 'pendiente',
-            //gestionar mail enviado
         ]);
+
+        $this->enviarMailAdmin($reserva);
+
         return redirect()->back()->with('success', 'Solicitud enviada con éxito.');
     }
 
     public function update(Request $request, $id) {
+
         if (!auth()->user()->is_admin) abort(403);
+
         $reserva = Reserva::findOrFail($id);
         $nuevoEstado = $request->input('estado');
+
         if ($nuevoEstado === 'confirmada') {
             $yaOcupada = Reserva::where('sesion_id', $reserva->sesion_id)
                 ->where('estado', 'confirmada')
@@ -69,6 +81,15 @@ class ReservaController extends Controller {
         }
         $reserva->estado = $nuevoEstado;
         $reserva->save();
+
+        if ($nuevoEstado === 'confirmada') {
+            try {
+                Mail::to($reserva->user->email)->send(new ReservationConfirmedEmail($reserva));
+            } catch (\Exception $e) {
+                // Loguear el error para depuración
+            }
+        }
+
         return redirect()->back()->with('success', 'Estado de la reserva actualizado.');
     }
 
@@ -93,5 +114,16 @@ class ReservaController extends Controller {
             ->withQueryString();
 
         return view('admin.reservas.index', compact('reservas'));
+    }
+
+    private function enviarMailAdmin($reserva) {
+        try {
+            $adminUser = User::where('role_id', 1)->first();
+            $adminEmail = $adminUser ? $adminUser->email : 'admin@azufit.com';
+
+            Mail::to($adminEmail)->send(new NewRequestAdminEmail($reserva));
+        } catch (\Exception $e) {
+            // Loguear el error para depuración
+        }
     }
 }

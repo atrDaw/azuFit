@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeEmail;
 
 class AuthController extends Controller {
     public function showLoginForm() {
@@ -41,7 +43,6 @@ class AuthController extends Controller {
 
     public function signup(SignupRequest $request) {
         try {
-
             $user = new User();
             $user->name = $request->name;
             $user->surname = $request->surname;
@@ -50,6 +51,9 @@ class AuthController extends Controller {
             $user->role_id = $request->is_student ? 3 : 2;
             $user->save();
             // throw new \Exception('¡Esto es un simulacro de error!');
+
+            Mail::to($user->email)->send(new WelcomeEmail($user));
+            
             return redirect()->route('login')->with('success', '¡Cuenta creada con éxito! Por favor inicia sesión.');
         } catch (\Exception $e) {
             return redirect()->back()
