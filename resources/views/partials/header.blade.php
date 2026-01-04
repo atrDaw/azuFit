@@ -17,30 +17,54 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4 gap-md-2 text-center">
         <li class="nav-item">
-          <a class="nav-link fw-medium" href="{{route('clases.index')}}">Clases Online</a>
+          <a class="nav-link fw-medium" href="{{route('clases.index')}}">{{ __('Clases Online') }}</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fw-medium" href="{{route('sesiones.index')}}">Clases Privadas</a>
+          <a class="nav-link fw-medium" href="{{route('sesiones.index')}}">{{ __('Clases Privadas') }}</a>
         </li>
         @auth
         @if(auth()->user()->isAdmin)
         <li class="nav-item">
-          <a class="nav-link fw-medium" href="{{route('admin.reservas.index')}}">Panel de Reservas</a>
+          <a class="nav-link fw-medium" href="{{route('admin.reservas.index')}}">{{ __('Panel de Reservas') }}</a>
         </li>
         @endif
         @endauth
       </ul>
 
-      <div class="d-flex justify-content-center align-items-center mt-3 mt-md-0">
-        <a href="{{route('login')}}" class="btn btn-primary rounded-3 px-4 py-2 fw-bold">
+      <div class="d-flex flex-column flex-md-row justify-content-center align-items-center mt-3 mt-md-0">
+        <div class="dropdown me-md-2 mb-2 mb-md-0">
+          <button class="btn btn-outline-secondary dropdown-toggle rounded-3 px-3 py-2 fw-medium d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="material-symbols-outlined" style="font-size: 18px;">language</span>
+            <span class="text-uppercase">{{ app()->getLocale() }}</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+            <li>
+              <a class="dropdown-item d-flex justify-content-between align-items-center {{ app()->getLocale() == 'es' ? 'active fw-bold' : '' }}" href="{{ route('language.switch', 'es') }}">
+                Español <img src="{{ asset('images/banderas/es.png') }}" alt="Español">
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex justify-content-between align-items-center {{ app()->getLocale() == 'en' ? 'active fw-bold' : '' }}" href="{{ route('language.switch', 'en') }}">
+                English <img src="{{ asset('images/banderas/en.png') }}" alt="English">
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex justify-content-between align-items-center {{ app()->getLocale() == 'va' ? 'active fw-bold' : '' }}" href="{{ route('language.switch', 'va') }}">
+                Valencià <img src="{{ asset('images/banderas/va.png') }}" alt="Valencià">
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <a href="{{route('login')}}" class="btn btn-primary rounded-3 px-4 py-2 fw-bold mb-2 mb-md-0">
           @auth
           {{Auth::user()->email}}
           @else
-          Inicia Sesión
+          {{ __('Inicia Sesión') }}
           @endauth
         </a>
         @auth
-        <form method="POST" action="{{ route('logout') }}" class="ms-3">
+        <form method="POST" action="{{ route('logout') }}" class="ms-md-2">
           @csrf
           <button type="submit" class="btn btn-outline-secondary rounded-3  py-2 d-flex alin-items-center justify-content-center">
             <span class="material-symbols-outlined">

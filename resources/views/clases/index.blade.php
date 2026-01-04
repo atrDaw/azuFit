@@ -1,38 +1,38 @@
 @extends('layout')
 
-@section('title', 'Catálogo de Clases - Azufit')
+@section('title', __('Catálogo de Clases - Azufit'))
 
 @section('content')
 <div class="container-fluid container-md py-5" style="min-height: 80vh;">
 
 
     <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold mb-3">Catálogo de Clases Grabadas</h1>
+        <h1 class="display-5 fw-bold mb-3">{{ __('Catálogo de Clases Grabadas') }}</h1>
         <p class="lead text-muted-color mx-auto" style="max-width: 700px;">
-            Explora nuestra biblioteca de vídeos y entrena a tu ritmo desde cualquier lugar.
+            {{ __('Explora nuestra biblioteca de vídeos y entrena a tu ritmo desde cualquier lugar.') }}
         </p>
         @if(auth()->user() && auth()->user()->isAdmin)
         <div class="mt-4">
             <a href="{{ route('clases.create') }}" class="btn btn-primary rounded-pill px-4 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow-sm hover-scale">
                 <span class="material-symbols-outlined">add_circle</span>
-                Crear Nueva Clase
+                {{ __('Crear Nueva Clase') }}
             </a>
         </div>
         @endif
     </div>
-    {{-- BARRA DE FILTROS --}}
+    
     <div class="row justify-content-center mb-5">
         <div class="col-lg-10">
             <div class="card border-0 shadow-sm rounded-3 bg-white">
                 <div class="card-body p-3">
                     <form action="{{ route('clases.index') }}" method="GET" class="row g-2 align-items-center">
 
-                        {{-- Filtro Disciplina --}}
+                        
                         <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 text-muted"><span class="material-symbols-outlined" style="font-size: 20px;">fitness_center</span></span>
                                 <select name="disciplina_id" class="form-select border-start-0 bg-light" onchange="this.form.submit()">
-                                    <option value="">Todas las Disciplinas</option>
+                                    <option value="">{{ __('Todas las Disciplinas') }}</option>
                                     @foreach($disciplinas as $disciplina)
                                     <option value="{{ $disciplina->id }}" {{ request('disciplina_id') == $disciplina->id ? 'selected' : '' }}>
                                         {{ $disciplina->nombre }}
@@ -42,24 +42,24 @@
                             </div>
                         </div>
 
-                        {{-- Filtro Nivel --}}
+                        
                         <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 text-muted"><span class="material-symbols-outlined" style="font-size: 20px;">signal_cellular_alt</span></span>
                                 <select name="nivel" class="form-select border-start-0 bg-light" onchange="this.form.submit()">
-                                    <option value="">Todos los Niveles</option>
-                                    <option value="Principiante" {{ request('nivel') == 'Principiante' ? 'selected' : '' }}>Principiante</option>
-                                    <option value="Intermedio" {{ request('nivel') == 'Intermedio' ? 'selected' : '' }}>Intermedio</option>
-                                    <option value="Avanzado" {{ request('nivel') == 'Avanzado' ? 'selected' : '' }}>Avanzado</option>
+                                    <option value="">{{ __('Todos los Niveles') }}</option>
+                                    <option value="Principiante" {{ request('nivel') == 'Principiante' ? 'selected' : '' }}>{{ __('Principiante') }}</option>
+                                    <option value="Intermedio" {{ request('nivel') == 'Intermedio' ? 'selected' : '' }}>{{ __('Intermedio') }}</option>
+                                    <option value="Avanzado" {{ request('nivel') == 'Avanzado' ? 'selected' : '' }}>{{ __('Avanzado') }}</option>
                                 </select>
                             </div>
                         </div>
 
-                        {{-- Botones Acción --}}
+                        
                         <div class="col-md-4 d-flex gap-2">
-                            <button type="submit" class="btn btn-primary w-100 fw-bold rounded-3">Filtrar</button>
+                            <button type="submit" class="btn btn-primary w-100 fw-bold rounded-3">{{ __('Filtrar') }}</button>
                             @if(request('disciplina_id') || request('nivel'))
-                            <a href="{{ route('clases.index') }}" class="btn btn-outline-secondary w-100 fw-bold rounded-3">Limpiar</a>
+                            <a href="{{ route('clases.index') }}" class="btn btn-outline-secondary w-100 fw-bold rounded-3">{{ __('Limpiar') }}</a>
                             @endif
                         </div>
                     </form>
@@ -86,7 +86,7 @@
                 <div class="card-img-top position-relative" style="height: 200px;">
 
                     <img src="{{ $imagen }}"
-                        alt="Clase de {{ $clase->disciplina->nombre }}"
+                        alt="{{ __('Clase de') }} {{ $clase->disciplina->nombre }}"
                         class="w-100 h-100"
                         style="object-fit: cover;">
 
@@ -96,7 +96,7 @@
                                 @if($clase->nivel == 'Principiante') bg-success 
                                 @elseif($clase->nivel == 'Intermedio') bg-warning text-dark 
                                 @else bg-danger @endif">
-                            {{ $clase->nivel }}
+                            {{ __($clase->nivel) }}
                         </span>
                     </div>
                 </div>
@@ -118,10 +118,10 @@
                         <a href="{{ route('clases.show', $clase->id) }}" class="btn w-100 rounded-3 fw-bold d-flex align-items-center justify-content-center gap-2 @auth btn-primary @else btn-outline-secondary @endauth">
                             @auth
                             <span class="material-symbols-outlined" style="font-size: 20px;">play_circle</span>
-                            Ver Clase
+                            {{ __('Ver Clase') }}
                             @else
                             <span class="material-symbols-outlined" style="font-size: 20px;">lock</span>
-                            Inicia sesión para ver
+                            {{ __('Inicia sesión para ver') }}
                             @endauth
                         </a>
 
@@ -134,8 +134,8 @@
             <div class="text-muted-color mb-3">
                 <span class="material-symbols-outlined" style="font-size: 64px;">fitness_center</span>
             </div>
-            <h3 class="h5 fw-bold">No hay clases disponibles aún</h3>
-            <p class="text-muted-color">Vuelve pronto para ver nuevo contenido.</p>
+            <h3 class="h5 fw-bold">{{ __('No hay clases disponibles aún') }}</h3>
+            <p class="text-muted-color">{{ __('Vuelve pronto para ver nuevo contenido.') }}</p>
         </div>
         @endforelse
     </div>

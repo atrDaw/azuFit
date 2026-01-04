@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Iniciar Sesión - Azufit')
+@section('title', __('Iniciar Sesión - Azufit'))
 
 @section('content')
 
@@ -12,8 +12,8 @@
                 <div class="card-body p-4 p-md-5">
 
                     <div class="text-center mb-4">
-                        <h1 class="h3 fw-bold mb-1">¡Hola de nuevo!</h1>
-                        <p class="small text-muted-color mb-0">Ingresa tus datos para continuar entrenando.</p>
+                        <h1 class="h3 fw-bold mb-1">{{ __('¡Hola de nuevo!') }}</h1>
+                        <p class="small text-muted-color mb-0">{{ __('Ingresa tus datos para continuar entrenando.') }}</p>
                     </div>
 
                     @error('login_error')
@@ -27,10 +27,11 @@
                         @csrf
 
                         <div class="mb-3">
-                            <label for="email" class="form-label small fw-bold text-muted-color">Correo Electrónico</label>
-                            <input type="email" name='email' class="form-control rounded-3 py-2" id="email" placeholder="ejemplo@correo.com" value="{{old('email')}}" required>
+                            <label for="email" class="form-label small fw-bold text-muted-color">{{ __('Correo Electrónico') }}</label>
+                            {{-- Traducimos también el placeholder --}}
+                            <input type="email" name='email' class="form-control rounded-3 py-2" id="email" placeholder="{{ __('ejemplo@correo.com') }}" value="{{old('email')}}" required>
                             <div class="invalid-feedback">
-                                Por favor introduce un correo válido.
+                                {{ __('Por favor introduce un correo válido.') }}
                             </div>
                             @error('email')
                             <div class="text-danger small mt-1">{{ $message }}</div>
@@ -39,32 +40,32 @@
 
                         <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center">
-                                <label for="password" class="form-label small fw-bold text-muted-color">Contraseña</label>
+                                <label for="password" class="form-label small fw-bold text-muted-color">{{ __('Contraseña') }}</label>
                             </div>
                             <input type="password" name='password' class="form-control rounded-3 py-2" id="password" placeholder="••••••••" required>
                             <div class="invalid-feedback">
-                                Por favor introduce tu contraseña.
+                                {{ __('Por favor introduce tu contraseña.') }}
                             </div>
                         </div>
 
                         <div class="mb-4 form-check">
                             <input type="checkbox" class="form-check-input" name="remember" id="rememberCheck">
                             <label class="form-check-label small text-muted-color" for="rememberCheck">
-                                Mantener sesión iniciada
+                                {{ __('Mantener sesión iniciada') }}
                             </label>
                         </div>
 
                         <div class="d-grid mb-4">
                             <button class="btn btn-primary rounded-3 py-2 fw-bold shadow-sm" type="submit">
-                                Iniciar Sesión
+                                {{ __('Iniciar Sesión') }}
                             </button>
                         </div>
 
                         <div class="text-center">
                             <p class="small text-muted-color mb-0">
-                                ¿Aún no tienes cuenta?
+                                {{ __('¿Aún no tienes cuenta?') }}
                                 <a href="{{route('signup')}}" class="text-primary-color fw-bold text-decoration-none hover-link">
-                                    Regístrate aquí
+                                    {{ __('Regístrate aquí') }}
                                 </a>
                             </p>
                         </div>
@@ -75,7 +76,7 @@
             <div class="text-center mt-4">
                 <a href="{{route('home')}}" class="small text-muted-color text-decoration-none d-flex align-items-center justify-content-center gap-1">
                     <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
-                    Volver al inicio
+                    {{ __('Volver al inicio') }}
                 </a>
             </div>
 
