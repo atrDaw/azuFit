@@ -51,7 +51,8 @@ class ClaseController extends Controller {
         $clase->nivel = $request->nivel;
 
         $clase->save();
-        return redirect()->route('clases.index')->with('success', 'Clase creada con éxito.');
+        // Texto envuelto en __()
+        return redirect()->route('clases.index')->with('success', __('Clase creada con éxito.'));
     }
 
     public function edit($id) {
@@ -64,7 +65,8 @@ class ClaseController extends Controller {
         $clase = Clase::findOrFail($id);
 
         if (auth()->check() && !auth()->user()->is_admin) {
-            abort(403, 'No autorizado para editar esta clase.');
+            // Texto envuelto en __()
+            abort(403, __('No autorizado para editar esta clase.'));
         }
         if ($request->hasFile('video_file') || $request->filled('url_video')) {
             if ($clase->url_video && !str_starts_with($clase->url_video, 'http') && Storage::disk('public')->exists($clase->url_video)) {
@@ -83,19 +85,22 @@ class ClaseController extends Controller {
         $clase->nivel = $request->nivel;
         $clase->save();
 
-        return redirect()->route('clases.show', $clase->id)->with('success', 'Clase actualizada correctamente.');
+        // Texto envuelto en __()
+        return redirect()->route('clases.show', $clase->id)->with('success', __('Clase actualizada correctamente.'));
     }
 
     public function destroy($id) {
         $clase = Clase::findOrFail($id);
 
         if (!auth()->user()->is_admin) {
-            abort(403, 'No autorizado para eliminar esta clase.');
+            // Texto envuelto en __()
+            abort(403, __('No autorizado para eliminar esta clase.'));
         }
         if ($clase->url_video && !str_starts_with($clase->url_video, 'http') && Storage::disk('public')->exists($clase->url_video)) {
             Storage::disk('public')->delete($clase->url_video);
         }
         $clase->delete();
-        return redirect()->route('clases.index')->with('success', 'Clase eliminada correctamente.');
+        // Texto envuelto en __()
+        return redirect()->route('clases.index')->with('success', __('Clase eliminada correctamente.'));
     }
 }

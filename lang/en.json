@@ -37,7 +37,7 @@
     "Términos de Servicio": "Terms of Service",
     "Política de Privacidad": "Privacy Policy",
     "Todos los derechos reservados.": "All rights reserved.",
-    
+
     "Gestión de Reservas - Azufit": "Reservation Management - Azufit",
     "Solicitudes de Reserva": "Reservation Requests",
     "Gestiona las citas y solicitudes de tus alumnos.": "Manage appointments and requests from your students.",
@@ -206,5 +206,36 @@
     "Ocupada": "Taken",
     "Solicitar Plaza": "Request Spot",
     "No hay sesiones programadas": "No sessions scheduled",
-    "Vuelve más tarde para ver los próximos directos.": "Come back later to see upcoming live sessions."
+    "Vuelve más tarde para ver los próximos directos.": "Come back later to see upcoming live sessions.",
+
+    "Has iniciado sesión correctamente.": "You have logged in successfully.",
+    "Las credenciales no coinciden.": "Credentials do not match our records.",
+    "Has cerrado sesión correctamente.": "You have logged out successfully.",
+    "¡Cuenta creada con éxito! Por favor inicia sesión.": "Account created successfully! Please login.",
+    "Hubo un error al crear tu cuenta. Por favor, inténtalo de nuevo.": "There was an error creating your account. Please try again.",
+
+    "Clase creada con éxito.": "Class created successfully.",
+    "No autorizado para editar esta clase.": "Unauthorized to edit this class.",
+    "No autorizado para eliminar esta clase.": "Unauthorized to delete this class.",
+    "Clase eliminada correctamente.": "Class deleted successfully.",
+    "Clase actualizada correctamente.": "Class updated successfully.",
+
+    "Lo siento, esta sesión ya ocupada por otro usuario.": "Sorry, this session is already booked by another user.",
+    "Ya tienes una solicitud para esta sesión.": "You already have a request for this session.",
+    "Reserva reactivada con éxito.": "Reservation reactivated successfully.",
+    "Solicitud enviada con éxito.": "Request sent successfully.",
+    "No se puede confirmar la reserva porque la sesión ya está ocupada.": "Cannot confirm reservation because the session is already fully booked.",
+    "Estado de la reserva actualizado.": "Reservation status updated.",
+    "Reserva cancelada.": "Reservation cancelled.",
+    "Acceso denegado": "Access denied",
+
+    "No autorizado para crear sesiones.": "Unauthorized to create sessions.",
+    "Sesión creada con éxito.": "Session created successfully.",
+    "No autorizado para editar esta sesión.": "Unauthorized to edit this session.",
+    "Sesión actualizada con éxito.": "Session updated successfully.",
+    "No autorizado para eliminar esta sesión.": "Unauthorized to delete this session.",
+    "Sesión eliminada con éxito.": "Session deleted successfully.",
+
+    "¡Genial!": "Great!",
+    "¡Ups!": "Oops!"
 }

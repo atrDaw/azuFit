@@ -36,7 +36,7 @@
             @if(session('success'))
             Swal.fire({
                 icon: 'success',
-                title: '¡Genial!',
+                title: "{{__('¡Genial!')}}",
                 text: "{{ session('success') }}",
                 showConfirmButton: false,
                 timer: 2000
@@ -46,7 +46,7 @@
             @if(session('error'))
             Swal.fire({
                 icon: 'error',
-                title: '¡Ups!',
+                title: "{{__('¡Ups!')}}",
                 text: "{{ session('error') }}",
                 showConfirmButton: true
             });
