@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Programar Sesión - Azufit')
+@section('title', __('Programar Sesión - Azufit'))
 
 @section('content')
 <div class="container d-flex align-items-center justify-content-center main-container-centered mt-1">
@@ -11,69 +11,64 @@
                 <div class="card-body p-4 p-md-5">
 
                     <div class="text-center mb-4">
-                        <h1 class="h3 fw-bold mb-1">Programar Directo</h1>
-                        <p class="small text-muted-color mb-0">Añade una nueva sesión en vivo al calendario.</p>
+                        <h1 class="h3 fw-bold mb-1">{{ __('Programar Directo') }}</h1>
+                        <p class="small text-muted-color mb-0">{{ __('Añade una nueva sesión en vivo al calendario.') }}</p>
                     </div>
 
                     <form class="needs-validation" novalidate action="{{ route('sesiones.store') }}" method="POST">
                         @csrf
 
-                        {{-- Título --}}
                         <div class="mb-3">
-                            <label for="titulo" class="form-label small fw-bold text-muted-color">Título de la Sesión</label>
-                            <input type="text" class="form-control rounded-3 py-2" id="titulo" name="titulo" value="{{ old('titulo') }}" placeholder="Ej: Yoga al Amanecer" required>
-                            <div class="invalid-feedback">Introduce un título para la sesión.</div>
+                            <label for="titulo" class="form-label small fw-bold text-muted-color">{{ __('Título de la Sesión') }}</label>
+                            <input type="text" class="form-control rounded-3 py-2" id="titulo" name="titulo" value="{{ old('titulo') }}" placeholder="{{ __('Ej: Yoga al Amanecer') }}" required>
+                            <div class="invalid-feedback">{{ __('Introduce un título para la sesión.') }}</div>
                             @error('titulo') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
 
-                        {{-- Disciplina --}}
                         <div class="mb-3">
-                            <label for="disciplina_id" class="form-label small fw-bold text-muted-color">Disciplina</label>
+                            <label for="disciplina_id" class="form-label small fw-bold text-muted-color">{{ __('Disciplina') }}</label>
                             <select class="form-select rounded-3 py-2" id="disciplina_id" name="disciplina_id" required>
-                                <option value="" selected disabled>Seleccionar...</option>
+                                <option value="" selected disabled>{{ __('Seleccionar...') }}</option>
                                 @foreach($disciplinas as $disciplina)
                                 <option value="{{ $disciplina->id }}" {{ old('disciplina_id') == $disciplina->id ? 'selected' : '' }}>
                                     {{ $disciplina->nombre }}
                                 </option>
                                 @endforeach
                             </select>
-                            <div class="invalid-feedback">Selecciona una disciplina.</div>
+                            <div class="invalid-feedback">{{ __('Selecciona una disciplina.') }}</div>
                             @error('disciplina_id') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="row g-3 mb-3">
-                            {{-- Fecha --}}
                             <div class="col-md-6">
-                                <label for="fecha" class="form-label small fw-bold text-muted-color">Fecha</label>
+                                <label for="fecha" class="form-label small fw-bold text-muted-color">{{ __('Fecha') }}</label>
                                 <input type="date" class="form-control rounded-3 py-2" id="fecha" name="fecha" value="{{ old('fecha') }}" required min="{{ date('Y-m-d') }}">
-                                <div class="invalid-feedback">Selecciona una fecha válida.</div>
+                                <div class="invalid-feedback">{{ __('Selecciona una fecha válida.') }}</div>
                                 @error('fecha') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- Hora --}}
                             <div class="col-md-6">
-                                <label for="hora" class="form-label small fw-bold text-muted-color">Hora</label>
+                                <label for="hora" class="form-label small fw-bold text-muted-color">{{ __('Hora') }}</label>
                                 <input type="time" class="form-control rounded-3 py-2" id="hora" name="hora" value="{{ old('hora') }}" required>
-                                <div class="invalid-feedback">Selecciona una hora.</div>
+                                <div class="invalid-feedback">{{ __('Selecciona una hora.') }}</div>
                                 @error('hora') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                             </div>
                         </div>
 
-                        {{-- URL de la Reunión --}}
                         <div class="mb-4">
-                            <label for="url_sesion" class="form-label small fw-bold text-muted-color">Enlace de la Reunión (Zoom/Meet)</label>
+                            <label for="url_sesion" class="form-label small fw-bold text-muted-color">{{ __('Enlace de la Reunión (Zoom/Meet)') }}</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0 text-muted"><span class="material-symbols-outlined" style="font-size: 18px;">link</span></span>
                                 <input type="url" class="form-control rounded-end-3 py-2 border-start-0 ps-0" id="url_sesion" name="url_sesion" value="{{ old('url_sesion') }}" placeholder="https://zoom.us/j/..." >
-                                <div class="invalid-feedback">Introduce una URL válida para la videollamada.</div>
+                                <div class="invalid-feedback">{{ __('Introduce una URL válida para la videollamada.') }}</div>
                             </div>
-                            <div class="form-text small mt-1">Este enlace se enviará a los usuarios que reserven.</div>
+                            <div class="form-text small mt-1">{{ __('Este enlace se enviará a los usuarios que reserven.') }}</div>
                             @error('url_sesion') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="d-grid mb-4">
                             <button class="btn btn-primary rounded-3 py-2 fw-bold shadow-sm" type="submit">
-                                Publicar Sesión
+                                {{ __('Publicar Sesión') }}
                             </button>
                         </div>
 
@@ -84,7 +79,7 @@
             <div class="text-center my-3">
                 <a href="{{ route('sesiones.index') }}" class="small text-muted-color text-decoration-none d-flex align-items-center justify-content-center gap-1">
                     <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
-                    Volver al calendario
+                    {{ __('Volver al calendario') }}
                 </a>
             </div>
 
