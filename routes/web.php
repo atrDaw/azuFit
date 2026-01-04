@@ -25,7 +25,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 route::get('/clases', [ClaseController::class, 'index'])->name('clases.index');
 
 Route::middleware('auth')->group(function () {
-
+    
     Route::get('/clases/create', [ClaseController::class, 'create'])->name('clases.create');
     Route::get('/clases/{id}', [ClaseController::class, 'show'])->name('clases.show');
     Route::post('/clases', [ClaseController::class, 'store'])->name('clases.store');
@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservas', [ReservaController::class, 'store'])->name('reservas.store');
     Route::delete('/reservas/{id}/destroy', [ReservaController::class, 'destroy'])->name('reservas.destroy');
 
-    //admin panel reservas
+    
     Route::get('/admin/reservas', [ReservaController::class, 'panel'])->name('admin.reservas.index');
     Route::put('/reservas/{id}', [ReservaController::class, 'update'])->name('reservas.update');
 
