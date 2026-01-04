@@ -31,9 +31,8 @@
         @endauth
       </ul>
 
-      <div class="d-flex justify-content-center align-items-center mt-3 mt-md-0">
-
-        <div class="dropdown me-2">
+      <div class="d-flex flex-column flex-md-row justify-content-center align-items-center mt-3 mt-md-0">
+        <div class="dropdown me-md-2 mb-2 mb-md-0">
           <button class="btn btn-outline-secondary dropdown-toggle rounded-3 px-3 py-2 fw-medium d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <span class="material-symbols-outlined" style="font-size: 18px;">language</span>
             <span class="text-uppercase">{{ app()->getLocale() }}</span>
@@ -57,7 +56,7 @@
           </ul>
         </div>
 
-        <a href="{{route('login')}}" class="btn btn-primary rounded-3 px-4 py-2 fw-bold">
+        <a href="{{route('login')}}" class="btn btn-primary rounded-3 px-4 py-2 fw-bold mb-2 mb-md-0">
           @auth
           {{Auth::user()->email}}
           @else
@@ -65,7 +64,7 @@
           @endauth
         </a>
         @auth
-        <form method="POST" action="{{ route('logout') }}" class="ms-3">
+        <form method="POST" action="{{ route('logout') }}" class="ms-md-2">
           @csrf
           <button type="submit" class="btn btn-outline-secondary rounded-3  py-2 d-flex alin-items-center justify-content-center">
             <span class="material-symbols-outlined">
