@@ -212,5 +212,36 @@
     "Miembro desde": "Membre des de",
     "Administrador": "Administrador",
     "Usuario": "Usuari",
-    "Estudiante": "Estudiant"
+    "Estudiante": "Estudiant",
+
+    "Has iniciado sesión correctamente.": "Has iniciat sessió correctament.",
+    "Las credenciales no coinciden.": "Les credencials no coincideixen.",
+    "Has cerrado sesión correctamente.": "Has tancat sessió correctament.",
+    "¡Cuenta creada con éxito! Por favor inicia sesión.": "Compte creat amb èxit! Per favor inicia sessió.",
+    "Hubo un error al crear tu cuenta. Por favor, inténtalo de nuevo.": "Hi ha hagut un error en crear el teu compte. Per favor, torna-ho a intentar.",
+
+    "Clase creada con éxito.": "Classe creada amb èxit.",
+    "No autorizado para editar esta clase.": "No autoritzat per a editar aquesta classe.",
+    "No autorizado para eliminar esta clase.": "No autoritzat per a eliminar aquesta classe.",
+    "Clase eliminada correctamente.": "Classe eliminada correctament.",
+    "Clase actualizada correctamente.": "Classe actualitzada correctament.",
+
+    "Lo siento, esta sesión ya ocupada por otro usuario.": "Ho sent, aquesta sessió ja està ocupada per un altre usuari.",
+    "Ya tienes una solicitud para esta sesión.": "Ja tens una sol·licitud per a aquesta sessió.",
+    "Reserva reactivada con éxito.": "Reserva reactivada amb èxit.",
+    "Solicitud enviada con éxito.": "Sol·licitud enviada amb èxit.",
+    "No se puede confirmar la reserva porque la sesión ya está ocupada.": "No es pot confirmar la reserva perquè la sessió ja està ocupada.",
+    "Estado de la reserva actualizado.": "Estat de la reserva actualitzat.",
+    "Reserva cancelada.": "Reserva cancel·lada.",
+    "Acceso denegado": "Accés denegat",
+
+    "No autorizado para crear sesiones.": "No autoritzat per a crear sessions.",
+    "Sesión creada con éxito.": "Sessió creada amb èxit.",
+    "No autorizado para editar esta sesión.": "No autoritzat per a editar aquesta sessió.",
+    "Sesión actualizada con éxito.": "Sessió actualitzada amb èxit.",
+    "No autorizado para eliminar esta sesión.": "No autoritzat per a eliminar aquesta sessió.",
+    "Sesión eliminada con éxito.": "Sessió eliminada amb èxit.",
+
+    "¡Genial!": "Genial!",
+    "¡Ups!": "Vaja!"
 }

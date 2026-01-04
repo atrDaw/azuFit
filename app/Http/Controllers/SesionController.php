@@ -27,15 +27,6 @@ class SesionController extends Controller {
 
         $sesiones = $query->orderBy('fecha_hora', 'asc')->get();
 
-        // $sesiones = SesionEnDirecto::with(['disciplina', 'reservas' => function ($query) use ($userId) { //añadir user id para ver si el usuario tiene reserva para mostrar estado
-        //     if ($userId) {
-        //         $query->where('user_id', $userId);
-        //     }
-        // }])
-        //     ->where('fecha_hora', '>=', now())
-        //     ->orderBy('fecha_hora', 'asc')
-        //     ->get();
-
         $sesionesPorDia = $sesiones->groupBy(function ($sesion) {
             return $sesion->fecha_hora->locale('es')->isoFormat('dddd D [de] MMMM [de] YYYY');
         });
@@ -50,7 +41,7 @@ class SesionController extends Controller {
 
     public function create() {
         if (!auth()->user()->is_admin) {
-            abort(403, 'No autorizado para crear sesiones.');
+            abort(403, __('No autorizado para crear sesiones.'));
         }
 
         $disciplinas = Disciplina::all();
@@ -59,7 +50,7 @@ class SesionController extends Controller {
 
     public function store(Request $request) {
         if (!auth()->user()->is_admin) {
-            abort(403, 'No autorizado para crear sesiones.');
+            abort(403, __('No autorizado para crear sesiones.'));
         }
 
         //validacion de datos (crear fuera)
@@ -72,13 +63,13 @@ class SesionController extends Controller {
 
         $sesion->url_sesion = $request->url_sesion;
         $sesion->save();
-        return redirect()->route('sesiones.index')->with('success', 'Sesión creada con éxito.'); // mejor devolver sesiones.show?
+        return redirect()->route('sesiones.index')->with('success', __('Sesión creada con éxito.')); // mejor devolver sesiones.show?
 
     }
 
     public function edit($id) {
         if (!auth()->user()->is_admin) {
-            abort(403, 'No autorizado para editar esta sesión.');
+            abort(403, __('No autorizado para editar esta sesión.'));
         }
 
         $sesion = SesionEnDirecto::findOrFail($id);
@@ -88,7 +79,7 @@ class SesionController extends Controller {
 
     public function update(Request $request, $id) {
         if (!auth()->user()->is_admin) {
-            abort(403, 'No autorizado para editar esta sesión.');
+            abort(403, __('No autorizado para editar esta sesión.'));
         }
 
         $sesion = SesionEnDirecto::findOrFail($id);
@@ -99,16 +90,16 @@ class SesionController extends Controller {
         $sesion->fecha_hora = $fechaHora;
         $sesion->url_sesion = $request->url_sesion;
         $sesion->save();
-        return redirect()->route('sesiones.index')->with('success', 'Sesión actualizada con éxito.');
+        return redirect()->route('sesiones.index')->with('success', __('Sesión actualizada con éxito.'));
     }
 
     public function destroy($id) {
         if (!auth()->user()->is_admin) {
-            abort(403, 'No autorizado para eliminar esta sesión.');
+            abort(403, __('No autorizado para eliminar esta sesión.'));
         }
 
         $sesion = SesionEnDirecto::findOrFail($id);
         $sesion->delete();
-        return redirect()->route('sesiones.index')->with('success', 'Sesión eliminada con éxito.');
+        return redirect()->route('sesiones.index')->with('success', __('Sesión eliminada con éxito.'));
     }
 }

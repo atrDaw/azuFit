@@ -26,10 +26,12 @@ class AuthController extends Controller {
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('home'))->with('success', 'Has iniciado sesión correctamente.');
+            // Texto envuelto en __()
+            return redirect()->intended(route('home'))->with('success', __('Has iniciado sesión correctamente.'));
         }
         return back()->withErrors([
-            'email' => 'Las credenciales no coinciden.',
+            // Texto envuelto en __()
+            'email' => __('Las credenciales no coinciden.'),
         ])->onlyInput('email');
     }
 
@@ -37,7 +39,8 @@ class AuthController extends Controller {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/')->with('success', 'Has cerrado sesión correctamente.');
+        // Texto envuelto en __()
+        return redirect('/')->with('success', __('Has cerrado sesión correctamente.'));
     }
 
     public function signupForm() {
@@ -57,10 +60,12 @@ class AuthController extends Controller {
 
             Mail::to($user->email)->send(new WelcomeEmail($user));
             
-            return redirect()->route('login')->with('success', '¡Cuenta creada con éxito! Por favor inicia sesión.');
+            // Texto envuelto en __()
+            return redirect()->route('login')->with('success', __('¡Cuenta creada con éxito! Por favor inicia sesión.'));
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with('error', 'Hubo un error al crear tu cuenta. Por favor, inténtalo de nuevo.')
+                // Texto envuelto en __()
+                ->with('error', __('Hubo un error al crear tu cuenta. Por favor, inténtalo de nuevo.'))
                 ->withInput();
         }
     }
