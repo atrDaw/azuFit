@@ -5,10 +5,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClaseController;
 use App\Http\Controllers\SesionController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\LanguageController;
 
 Route::get('/', function () {
     return view('index');
 })->name('home');
+
+Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

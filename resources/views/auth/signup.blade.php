@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title','Registro - Azufit')
+@section('title', __('Registro - Azufit'))
 
 @section('content')
 
@@ -12,8 +12,8 @@
                 <div class="card-body p-4 p-md-5">
 
                     <div class="text-center mb-4">
-                        <h1 class="h3 fw-bold mb-1">Crea tu cuenta</h1>
-                        <p class="small text-muted-color mb-0">Únete a la comunidad Azufit y empieza tu transformación.</p>
+                        <h1 class="h3 fw-bold mb-1">{{ __('Crea tu cuenta') }}</h1>
+                        <p class="small text-muted-color mb-0">{{ __('Únete a la comunidad Azufit y empieza tu transformación.') }}</p>
                     </div>
 
                     <form class="needs-validation" novalidate action="{{route('signup')}}" method="post">
@@ -21,21 +21,21 @@
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label for="validationCustom01" class="form-label small fw-bold text-muted-color">Nombre</label>
-                                <input type="text" name="name" class="form-control rounded-3 py-2" id="validationCustom01" placeholder="Ej: Rick" value="{{ old('name') }}" required>
-                                <div class="invalid-feedback">Por favor introduce tu nombre.</div>
+                                <label for="validationCustom01" class="form-label small fw-bold text-muted-color">{{ __('Nombre') }}</label>
+                                <input type="text" name="name" class="form-control rounded-3 py-2" id="validationCustom01" placeholder="{{ __('Ej: Rick') }}" value="{{ old('name') }}" required>
+                                <div class="invalid-feedback">{{ __('Por favor introduce tu nombre.') }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="validationCustom02" class="form-label small fw-bold text-muted-color">Apellido</label>
-                                <input type="text" name="surname" class="form-control rounded-3 py-2" id="validationCustom02" placeholder="Ej: Sánchez" value="{{ old('surname') }}" required>
-                                <div class="invalid-feedback">Por favor introduce tu apellido.</div>
+                                <label for="validationCustom02" class="form-label small fw-bold text-muted-color">{{ __('Apellido') }}</label>
+                                <input type="text" name="surname" class="form-control rounded-3 py-2" id="validationCustom02" placeholder="{{ __('Ej: Sánchez') }}" value="{{ old('surname') }}" required>
+                                <div class="invalid-feedback">{{ __('Por favor introduce tu apellido.') }}</div>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="validationCustom03" class="form-label small fw-bold text-muted-color">Correo Electrónico</label>
-                            <input type="email" name="email" class="form-control rounded-3 py-2" id="validationCustom03" placeholder="ejemplo@correo.com" value="{{ old('email') }}" required>
-                            <div class="invalid-feedback">Por favor introduce un correo válido.</div>
+                            <label for="validationCustom03" class="form-label small fw-bold text-muted-color">{{ __('Correo Electrónico') }}</label>
+                            <input type="email" name="email" class="form-control rounded-3 py-2" id="validationCustom03" placeholder="{{ __('ejemplo@correo.com') }}" value="{{ old('email') }}" required>
+                            <div class="invalid-feedback">{{ __('Por favor introduce un correo válido.') }}</div>
                             @error('email')
                             <div class="text-danger small mt-1">{{ $message }}</div>
                             @enderror
@@ -43,17 +43,17 @@
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label for="validationCustom04" class="form-label small fw-bold text-muted-color">Contraseña</label>
+                                <label for="validationCustom04" class="form-label small fw-bold text-muted-color">{{ __('Contraseña') }}</label>
                                 <input type="password" name="password" class="form-control rounded-3 py-2" id="validationCustom04" placeholder="••••••••" required>
-                                <div class="invalid-feedback">Introduce una contraseña válida.</div>
+                                <div class="invalid-feedback">{{ __('Introduce una contraseña válida.') }}</div>
                                 @error('password')
                                 <div class="text-danger small mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label for="validationCustom05" class="form-label small fw-bold text-muted-color">Repetir contraseña</label>
+                                <label for="validationCustom05" class="form-label small fw-bold text-muted-color">{{ __('Repetir contraseña') }}</label>
                                 <input type="password" name="password_confirmation" class="form-control rounded-3 py-2" id="validationCustom05" placeholder="••••••••" required>
-                                <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+                                <div class="invalid-feedback">{{ __('Las contraseñas no coinciden.') }}</div>
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
                                     <input class="form-check-input ms-0" type="checkbox" name="is_student" value="1" id="isStudentCheck" {{ old('is_student') ? 'checked' : '' }} >
                                     
                                     <label class="form-check-label small text-muted-color" for="isStudentCheck" style="cursor: pointer; user-select: none;">
-                                        Soy estudiante 
+                                        {{ __('Soy estudiante') }} 
                                     </label>
                                 </div>
                             </div>
@@ -71,15 +71,15 @@
 
                         <div class="d-grid mb-4">
                             <button class="btn btn-primary rounded-3 py-2 fw-bold shadow-sm" type="submit">
-                                Registrarme
+                                {{ __('Registrarme') }}
                             </button>
                         </div>
 
                         <div class="text-center">
                             <p class="small text-muted-color mb-0">
-                                ¿Ya tienes una cuenta?
+                                {{ __('¿Ya tienes una cuenta?') }}
                                 <a href="{{route('login')}}" class="text-primary-color fw-bold text-decoration-none hover-link">
-                                    Inicia sesión aquí
+                                    {{ __('Inicia sesión aquí') }}
                                 </a>
                             </p>
                         </div>
@@ -90,7 +90,7 @@
             <div class="text-center mt-4">
                 <a href="{{route('home')}}" class="small text-muted-color text-decoration-none d-flex align-items-center justify-content-center gap-1">
                     <span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
-                    Volver al inicio
+                    {{ __('Volver al inicio') }}
                 </a>
             </div>
 
