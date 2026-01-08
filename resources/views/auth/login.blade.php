@@ -28,7 +28,6 @@
 
                         <div class="mb-3">
                             <label for="email" class="form-label small fw-bold text-muted-color">{{ __('Correo Electrónico') }}</label>
-                            {{-- Traducimos también el placeholder --}}
                             <input type="email" name='email' class="form-control rounded-3 py-2" id="email" placeholder="{{ __('ejemplo@correo.com') }}" value="{{old('email')}}" required>
                             <div class="invalid-feedback">
                                 {{ __('Por favor introduce un correo válido.') }}

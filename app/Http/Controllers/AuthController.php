@@ -26,11 +26,9 @@ class AuthController extends Controller {
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            // Texto envuelto en __()
             return redirect()->intended(route('home'))->with('success', __('Has iniciado sesión correctamente.'));
         }
         return back()->withErrors([
-            // Texto envuelto en __()
             'email' => __('Las credenciales no coinciden.'),
         ])->onlyInput('email');
     }
@@ -39,7 +37,6 @@ class AuthController extends Controller {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        // Texto envuelto en __()
         return redirect('/')->with('success', __('Has cerrado sesión correctamente.'));
     }
 
@@ -60,11 +57,9 @@ class AuthController extends Controller {
 
             Mail::to($user->email)->send(new WelcomeEmail($user));
             
-            // Texto envuelto en __()
             return redirect()->route('login')->with('success', __('¡Cuenta creada con éxito! Por favor inicia sesión.'));
         } catch (\Exception $e) {
             return redirect()->back()
-                // Texto envuelto en __()
                 ->with('error', __('Hubo un error al crear tu cuenta. Por favor, inténtalo de nuevo.'))
                 ->withInput();
         }

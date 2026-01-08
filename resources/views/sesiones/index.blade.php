@@ -199,7 +199,6 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Seleccionamos todos los formularios con la clase 'form-eliminar'
         const forms = document.querySelectorAll('.form-eliminar');
 
         forms.forEach(form => {

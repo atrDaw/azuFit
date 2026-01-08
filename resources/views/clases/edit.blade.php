@@ -151,7 +151,6 @@
 </div>
 
 <script>
-    // Lógica para alternar inputs de video
     function toggleVideoInput(source) {
         const urlContainer = document.getElementById('input_url_container');
         const fileContainer = document.getElementById('input_file_container');
@@ -161,7 +160,6 @@
         if (source === 'url') {
             urlContainer.classList.remove('d-none');
             fileContainer.classList.add('d-none');
-            // En editar NO borramos el valor al cambiar, por si el usuario se arrepiente y vuelve a la pestaña anterior
             // fileInput.value = ''; 
         } else {
             urlContainer.classList.add('d-none');

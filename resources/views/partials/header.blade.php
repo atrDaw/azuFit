@@ -15,7 +15,7 @@
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-4 gap-md-2 text-center">
+      <ul class="navbar-nav me-auto ms-md-5 mb-2 mb-lg-0 gap-4 gap-md-2 text-center">
         <li class="nav-item">
           <a class="nav-link fw-medium" href="{{route('clases.index')}}">{{ __('Clases Online') }}</a>
         </li>

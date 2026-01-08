@@ -16,19 +16,11 @@ class SesionesTableSeeder extends Seeder
     public function run(): void
     {
         
-        // 1. Aseguramos que existan las disciplinas básicas
-        // Usamos firstOrCreate para no duplicar si ya ejecutaste otros seeders
         $yoga = Disciplina::firstOrCreate(['nombre' => 'Yoga']);
         $pilates = Disciplina::firstOrCreate(['nombre' => 'Pilates']);
         $estiramientos = Disciplina::firstOrCreate(['nombre' => 'Estiramientos']);
 
-        // 2. Limpiamos la tabla de sesiones para evitar duplicados al probar
-        // (Opcional, comenta esta línea si prefieres acumular datos)
-        // SesionEnDirecto::truncate();
-
-        // 3. Creamos sesiones para los próximos días
-
-        // --- MAÑANA ---
+        
         SesionEnDirecto::create([
             'titulo' => 'Yoga al Amanecer: Energía Positiva',
             'disciplina_id' => $yoga->id,
@@ -43,7 +35,7 @@ class SesionesTableSeeder extends Seeder
             'url_sesion' => 'https://meet.google.com/abc-defg-hij',
         ]);
 
-        // --- PASADO MAÑANA ---
+        
         SesionEnDirecto::create([
             'titulo' => 'Estiramientos para la Espalda',
             'disciplina_id' => $estiramientos->id,
@@ -58,7 +50,7 @@ class SesionesTableSeeder extends Seeder
             'url_sesion' => 'https://zoom.us/j/987654321',
         ]);
 
-        // --- DENTRO DE 3 DÍAS ---
+
         SesionEnDirecto::create([
             'titulo' => 'Pilates con Accesorios',
             'disciplina_id' => $pilates->id,

@@ -51,7 +51,6 @@ class ClaseController extends Controller {
         $clase->nivel = $request->nivel;
 
         $clase->save();
-        // Texto envuelto en __()
         return redirect()->route('clases.index')->with('success', __('Clase creada con éxito.'));
     }
 
@@ -65,7 +64,6 @@ class ClaseController extends Controller {
         $clase = Clase::findOrFail($id);
 
         if (auth()->check() && !auth()->user()->is_admin) {
-            // Texto envuelto en __()
             abort(403, __('No autorizado para editar esta clase.'));
         }
         if ($request->hasFile('video_file') || $request->filled('url_video')) {
@@ -85,7 +83,6 @@ class ClaseController extends Controller {
         $clase->nivel = $request->nivel;
         $clase->save();
 
-        // Texto envuelto en __()
         return redirect()->route('clases.show', $clase->id)->with('success', __('Clase actualizada correctamente.'));
     }
 
@@ -93,14 +90,12 @@ class ClaseController extends Controller {
         $clase = Clase::findOrFail($id);
 
         if (!auth()->user()->is_admin) {
-            // Texto envuelto en __()
             abort(403, __('No autorizado para eliminar esta clase.'));
         }
         if ($clase->url_video && !str_starts_with($clase->url_video, 'http') && Storage::disk('public')->exists($clase->url_video)) {
             Storage::disk('public')->delete($clase->url_video);
         }
         $clase->delete();
-        // Texto envuelto en __()
         return redirect()->route('clases.index')->with('success', __('Clase eliminada correctamente.'));
     }
 }

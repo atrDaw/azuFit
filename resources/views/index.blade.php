@@ -92,7 +92,7 @@
       <div class="position-relative overflow-hidden rounded-3 bg-accent-color py-5 px-4 text-center">
         <h2 class="h3 fw-bolder mb-3 text-dark">{{ __('¿Lista para empezar?') }}</h2>
         <p class="lead mx-auto mb-4 text-dark" style="max-width: 600px;">{{ __('Únete a la comunidad de Azufit hoy y da el primer paso hacia una versión más saludable y feliz de ti mismo. Explora nuestro horario de clases y encuentra la perfecta para ti.') }}</p>
-        <a class="btn btn-primary btn-lg rounded-3 py-2 px-4 fw-bold" href="#" role="button">{{ __('Explorar Clases') }}</a>
+        <a class="btn btn-primary btn-lg rounded-3 py-2 px-4 fw-bold" href="{{ route('clases.index') }}" role="button">{{ __('Explorar Clases') }}</a>
       </div>
     </div>
   </section>

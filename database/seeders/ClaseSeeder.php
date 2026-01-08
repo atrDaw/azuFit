@@ -13,8 +13,6 @@ class ClaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Obtenemos los IDs de las disciplinas que ya has creado en DisciplinasTableSeeder
-        // Definimos las disciplinas que vamos a usar en este seeder
         $nombresDisciplinas = ['Yoga', 'Pilates', 'Estiramientos'];
         $ids = [];
 
@@ -24,7 +22,7 @@ class ClaseSeeder extends Seeder
             if ($disciplina) {
                 $ids[$nombre] = $disciplina->id;
             } else {
-                // Fallback: Si por alguna razón no existe (ej. no se corrió el otro seeder), la creamos
+                
                 $ids[$nombre] = DB::table('disciplinas')->insertGetId([
                     'nombre' => $nombre,
                     'created_at' => Carbon::now(),
@@ -33,9 +31,9 @@ class ClaseSeeder extends Seeder
             }
         }
 
-        // 2. Datos de las Clases asociados a las disciplinas existentes
+        
         $clases = [
-            // --- YOGA ---
+        
             [
                 'titulo' => 'Yoga: Saludo al Sol',
                 'descripcion' => 'Secuencia básica de Vinyasa para despertar el cuerpo y la mente.',
@@ -51,7 +49,7 @@ class ClaseSeeder extends Seeder
                 'url_video' => 'https://www.youtube.com/embed/LiUnFJ8PdbQ',
             ],
 
-            // --- PILATES ---
+        
             [
                 'titulo' => 'Pilates Core 30 min',
                 'descripcion' => 'Fortalece tu centro con ejercicios controlados en el suelo.',
@@ -67,24 +65,24 @@ class ClaseSeeder extends Seeder
                 'url_video' => 'https://www.youtube.com/embed/J73oM6gCjT0',
             ],
 
-            // --- ESTIRAMIENTOS ---
+        
             [
                 'titulo' => 'Estiramientos Matutinos',
                 'descripcion' => 'Rutina suave de 10 minutos para desentumecer los músculos al despertar.',
                 'disciplina_id' => $ids['Estiramientos'],
                 'nivel' => 'Principiante',
-                'url_video' => 'https://www.youtube.com/embed/g_tea8ZNk5A', // Video ejemplo
+                'url_video' => 'https://www.youtube.com/embed/g_tea8ZNk5A', 
             ],
             [
                 'titulo' => 'Flexibilidad Total',
                 'descripcion' => 'Sesión intensiva para mejorar tu rango de movimiento en piernas y caderas.',
                 'disciplina_id' => $ids['Estiramientos'],
                 'nivel' => 'Avanzado',
-                'url_video' => 'https://www.youtube.com/embed/jeNzALQ4P2A', // Video ejemplo
+                'url_video' => 'https://www.youtube.com/embed/jeNzALQ4P2A', 
             ],
         ];
 
-        // 3. Insertamos las clases
+        
         foreach ($clases as $clase) {
             DB::table('clases')->insert(array_merge($clase, [
                 'created_at' => Carbon::now(),
