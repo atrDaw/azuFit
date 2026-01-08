@@ -33,9 +33,12 @@ git clone
 ### 2. Instalar dependencias
 composer install
 ### 3. Configurar .env
+Copiar .env.example y configurarlo para tu entorno local
 ### 4. Generar clave de aplicacion
 php artisan key:generate
 ### 5. Base de datos y datos de prueba
+Crea la base de datos llamada azufit
+
 php artisan migrate --seed
 ### 6. Vincular almacenamiento
 php artisan storage:link
