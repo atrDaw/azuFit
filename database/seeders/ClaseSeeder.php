@@ -46,7 +46,7 @@ class ClaseSeeder extends Seeder
                 'descripcion' => 'Alivia la tensión acumulada en la espalda baja y hombros.',
                 'disciplina_id' => $ids['Yoga'],
                 'nivel' => 'Intermedio',
-                'url_video' => 'https://www.youtube.com/embed/LiUnFJ8PdbQ',
+                'url_video' => 'https://www.youtube.com/embed/8cltCOUpYTQ',
             ],
 
         
@@ -55,14 +55,14 @@ class ClaseSeeder extends Seeder
                 'descripcion' => 'Fortalece tu centro con ejercicios controlados en el suelo.',
                 'disciplina_id' => $ids['Pilates'],
                 'nivel' => 'Intermedio',
-                'url_video' => 'https://www.youtube.com/embed/K-PpDdHg1ng',
+                'url_video' => 'https://www.youtube.com/embed/C2HX2pNbUCM',
             ],
             [
                 'titulo' => 'Introducción al Pilates',
                 'descripcion' => 'Aprende la respiración y las posturas básicas.',
                 'disciplina_id' => $ids['Pilates'],
                 'nivel' => 'Principiante',
-                'url_video' => 'https://www.youtube.com/embed/J73oM6gCjT0',
+                'url_video' => 'https://www.youtube.com/embed/MDDuE_vdVFo',
             ],
 
         
@@ -78,7 +78,7 @@ class ClaseSeeder extends Seeder
                 'descripcion' => 'Sesión intensiva para mejorar tu rango de movimiento en piernas y caderas.',
                 'disciplina_id' => $ids['Estiramientos'],
                 'nivel' => 'Avanzado',
-                'url_video' => 'https://www.youtube.com/embed/jeNzALQ4P2A', 
+                'url_video' => 'https://www.youtube.com/embed/Lx4YFmORsWc', 
             ],
         ];
 
