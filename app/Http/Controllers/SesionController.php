@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SesionRequest;
 use Illuminate\Http\Request;
 use App\Models\SesionEnDirecto;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Disciplina;
+
 
 class SesionController extends Controller {
 
@@ -48,7 +50,7 @@ class SesionController extends Controller {
         return view('sesiones.create', compact('disciplinas'));
     }
 
-    public function store(Request $request) {
+    public function store(SesionRequest $request) {
         if (!auth()->user()->is_admin) {
             abort(403, __('No autorizado para crear sesiones.'));
         }
@@ -77,7 +79,7 @@ class SesionController extends Controller {
         return view('sesiones.edit', compact('sesion', 'disciplinas'));
     }
 
-    public function update(Request $request, $id) {
+    public function update(SesionRequest $request, $id) {
         if (!auth()->user()->is_admin) {
             abort(403, __('No autorizado para editar esta sesión.'));
         }

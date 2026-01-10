@@ -243,5 +243,12 @@
     "Sesión eliminada con éxito.": "Sessió eliminada amb èxit.",
 
     "¡Genial!": "Genial!",
-    "¡Ups!": "Vaja!"
+    "¡Ups!": "Vaja!",
+
+    "El título debe ser un texto.": "El títol ha de ser un text.",
+    "El título no puede superar los 255 caracteres.": "El títol no pot superar els 255 caràcters.",
+    "La disciplina seleccionada no es válida.": "La disciplina seleccionada no és vàlida.",
+    "El campo fecha no tiene un formato válido.": "El camp data no té un format vàlid.",
+    "La fecha debe ser hoy o posterior.": "La data ha de ser hui o posterior.",
+    "El formato del enlace no es válido.": "El format de l'enllaç no és vàlid."
 }
