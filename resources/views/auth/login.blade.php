@@ -47,13 +47,6 @@
                             </div>
                         </div>
 
-                        <div class="mb-4 form-check">
-                            <input type="checkbox" class="form-check-input" name="remember" id="rememberCheck">
-                            <label class="form-check-label small text-muted-color" for="rememberCheck">
-                                {{ __('Mantener sesión iniciada') }}
-                            </label>
-                        </div>
-
                         <div class="d-grid mb-4">
                             <button class="btn btn-primary rounded-3 py-2 fw-bold shadow-sm" type="submit">
                                 {{ __('Iniciar Sesión') }}
