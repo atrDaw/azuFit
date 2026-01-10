@@ -138,6 +138,9 @@
             <p class="text-muted-color">{{ __('Vuelve pronto para ver nuevo contenido.') }}</p>
         </div>
         @endforelse
+        <div class="mt-3">
+            {{ $clases->links() }}
+        </div>
     </div>
 </div>
 @endsection

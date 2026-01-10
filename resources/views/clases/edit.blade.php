@@ -123,6 +123,12 @@
 
                                 <div id="input_file_container" class="{{ $sourceCheck == 'file' ? '' : 'd-none' }}">
                                     <input class="form-control rounded-3 py-2" type="file" name="video_file" id="video_file" accept="video/*">
+
+                                    {{-- Contenedor añadido para mostrar errores de JS --}}
+                                    <div class="invalid-feedback">
+                                        {{ __('El archivo seleccionado no es válido.') }}
+                                    </div>
+
                                     <div class="form-text small mt-1">{{ __('Deja vacío para mantener el archivo actual.') }}</div>
                                     @error('video_file') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                                 </div>
@@ -149,22 +155,17 @@
         </div>
     </div>
 </div>
-
 <script>
     function toggleVideoInput(source) {
         const urlContainer = document.getElementById('input_url_container');
         const fileContainer = document.getElementById('input_file_container');
-        const urlInput = document.getElementById('url_video');
-        const fileInput = document.getElementById('video_file');
 
         if (source === 'url') {
             urlContainer.classList.remove('d-none');
             fileContainer.classList.add('d-none');
-            // fileInput.value = ''; 
         } else {
             urlContainer.classList.add('d-none');
             fileContainer.classList.remove('d-none');
-            // urlInput.value = '';
         }
     }
 
@@ -172,24 +173,59 @@
         'use strict';
         window.addEventListener('load', function() {
             var forms = document.getElementsByClassName('needs-validation');
-            var validation = Array.prototype.filter.call(forms, function(form) {
+
+            const MAX_SIZE_MB = 100;
+            const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+            const ALLOWED_TYPES = [
+                'video/mp4', // El estándar universal
+                'video/webm', // Optimizado para web
+                'video/ogg' // Alternativa open source
+            ];
+
+            Array.prototype.filter.call(forms, function(form) {
                 form.addEventListener('submit', function(event) {
 
                     const videoSource = document.querySelector('input[name="video_source"]:checked').value;
                     const urlInput = document.getElementById('url_video');
+                    const fileInput = document.getElementById('video_file');
 
-                    if (videoSource === 'url' && !urlInput.value) {
+                    const fileFeedbackDiv = fileInput.parentElement.querySelector('.invalid-feedback');
+                    const defaultFileMsg = "{{ __('El archivo seleccionado no es válido.') }}";
 
-                        urlInput.setCustomValidity("{{ __('Introduce una URL válida') }}");
-                    } else {
-                        urlInput.setCustomValidity('');
+                    urlInput.setCustomValidity('');
+                    fileInput.setCustomValidity('');
+                    if (fileFeedbackDiv) fileFeedbackDiv.textContent = defaultFileMsg;
+
+                    if (videoSource === 'url') {
+                        if (!urlInput.value) {
+                            urlInput.setCustomValidity("{{ __('Introduce una URL válida') }}");
+                        }
+                    }
+
+                    else if (videoSource === 'file') {
+                        if (fileInput.files.length > 0) {
+                            const file = fileInput.files[0];
+
+                            if (file.size > MAX_SIZE_BYTES) {
+                                const sizeMsg = "{{ __('El archivo supera el límite de ') }}" + MAX_SIZE_MB + "MB.";
+                                fileInput.setCustomValidity(sizeMsg);
+                                fileFeedbackDiv.textContent = sizeMsg;
+                            }
+                            else if (!ALLOWED_TYPES.includes(file.type)) {
+                                const typeMsg = "{{ __('Formato no válido. Usa MP4, WEBM, OGG.') }}";
+                                fileInput.setCustomValidity(typeMsg);
+                                fileFeedbackDiv.textContent = typeMsg;
+                            }
+                        }
                     }
 
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
                     }
+
                     form.classList.add('was-validated');
+
                 }, false);
             });
         }, false);

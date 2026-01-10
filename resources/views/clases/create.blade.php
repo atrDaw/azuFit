@@ -150,10 +150,15 @@
         }
     }
 
-    (function() {
+   (function() {
         'use strict';
         window.addEventListener('load', function() {
             var forms = document.getElementsByClassName('needs-validation');
+
+            const MAX_SIZE_MB = 100;
+            const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+            const ALLOWED_TYPES = ['video/mp4', 'video/webm', 'video/ogg'];
+
             var validation = Array.prototype.filter.call(forms, function(form) {
                 form.addEventListener('submit', function(event) {
 
@@ -161,15 +166,36 @@
                     const urlInput = document.getElementById('url_video');
                     const fileInput = document.getElementById('video_file');
 
-                    if (videoSource === 'url' && !urlInput.value) {
+                    const fileFeedbackDiv = fileInput.parentElement.querySelector('.invalid-feedback');
+                    const defaultFileMsg = "{{ __('Selecciona un archivo válido.') }}";
 
-                        urlInput.setCustomValidity("{{ __('Introduce una URL válida') }}");
-                    } else if (videoSource === 'file' && !fileInput.value) {
+                    urlInput.setCustomValidity('');
+                    fileInput.setCustomValidity('');
+                    if (fileFeedbackDiv) fileFeedbackDiv.textContent = defaultFileMsg;
 
-                        fileInput.setCustomValidity("{{ __('Selecciona un archivo') }}");
-                    } else {
-                        urlInput.setCustomValidity('');
-                        fileInput.setCustomValidity('');
+                    if (videoSource === 'url') {
+                        if (!urlInput.value) {
+                            urlInput.setCustomValidity("{{ __('Introduce una URL válida') }}");
+                        }
+                    } 
+                    else if (videoSource === 'file') {
+                        if (fileInput.files.length === 0) {
+                            fileInput.setCustomValidity("{{ __('Selecciona un archivo.') }}");
+                        } 
+                        else {
+                            const file = fileInput.files[0];
+
+                            if (file.size > MAX_SIZE_BYTES) {
+                                const sizeMsg = "{{ __('El archivo supera el límite de ') }}" + MAX_SIZE_MB + "MB.";
+                                fileInput.setCustomValidity(sizeMsg);
+                                fileFeedbackDiv.textContent = sizeMsg; 
+                            } 
+                            else if (!ALLOWED_TYPES.includes(file.type)) {
+                                const typeMsg = "{{ __('Formato no válido. Usa MP4, WebM o Ogg.') }}";
+                                fileInput.setCustomValidity(typeMsg);
+                                fileFeedbackDiv.textContent = typeMsg; 
+                            }
+                        }
                     }
 
                     if (form.checkValidity() === false) {

@@ -23,7 +23,7 @@ class ClaseRequest extends FormRequest {
             'descripcion' => 'required|string|min:10|max:255',
             'disciplina_id' => 'required|exists:disciplinas,id',
             'nivel' => 'required|in:Principiante,Intermedio,Avanzado',
-            'video_file' => 'file|mimes:mp4,mov,avi,wmv|max:20480',
+            'video_file' => 'nullable|file|mimes:mp4,webm,ogg|max:102400',
             'url_video' => 'nullable|url',
         ];
     }
@@ -44,8 +44,8 @@ class ClaseRequest extends FormRequest {
             'nivel.in' => 'El nivel seleccionado no es válido. Debe ser Principiante, Intermedio o Avanzado.',
             
             'video_file.file' => 'El archivo de video debe ser un archivo válido.',
-            'video_file.mimes' => 'El archivo de video debe ser de tipo mp4, mov, avi o wmv.',
-            'video_file.max' => 'El archivo de video no debe superar los 20MB.',
+            'video_file.mimes' => 'El archivo de video debe ser de tipo mp4, webm o ogg.',
+            'video_file.max' => 'El archivo de video no debe superar los 100MB.',
             'url_video.url' => 'La URL del video debe ser una URL válida.',
         ];
     }
