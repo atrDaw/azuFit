@@ -244,5 +244,12 @@
     "Sesión eliminada con éxito.": "Session deleted successfully.",
 
     "¡Genial!": "Great!",
-    "¡Ups!": "Oops!"
+    "¡Ups!": "Oops!",
+
+    "El título debe ser un texto.": "The title must be text.",
+    "El título no puede superar los 255 caracteres.": "The title cannot exceed 255 characters.",
+    "La disciplina seleccionada no es válida.": "The selected discipline is invalid.",
+    "El campo fecha no tiene un formato válido.": "The date field does not have a valid format.",
+    "La fecha debe ser hoy o posterior.": "The date must be today or later.",
+    "El formato del enlace no es válido.": "The link format is invalid."
 }
