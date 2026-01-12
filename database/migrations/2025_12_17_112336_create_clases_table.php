@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->string('titulo', 200);
             $table->text('descripcion');
             $table->foreignId('disciplina_id')->constrained('disciplinas')->onDelete('cascade');
-
             $table->enum('nivel', ['Principiante', 'Intermedio', 'Avanzado']);
             $table->string('url_video', 255)->nullable();
 
