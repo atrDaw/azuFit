@@ -33,6 +33,9 @@ class ClaseController extends Controller {
     }
 
     public function create() {
+        if(!auth()->user()->is_admin) {
+            abort(403, __('No autorizado para crear una clase.'));
+        }
         $disciplinas = Disciplina::all();
         return view('clases.create', compact('disciplinas'));
     }
