@@ -1,7 +1,9 @@
 # azuFit 🏋️‍♀️
 
 ## 📖 Descripción
-Plataforma de entrenamiento deportivo
+
+**AzuFit** es una solución web integral diseñada para centralizar y optimizar la gestión del entrenamiento deportivo en línea. El proyecto nace de la necesidad de unificar herramientas de videoconferencia, gestión de contenidos multimedia y administración de agendas en una única plataforma.
+La aplicación emplea una arquitectura **MVC (Modelo-Vista-Controlador)** robusta proporcionada por Laravel permitiendo una separación clara entre la lógica de negocio y la interfaz de usuario. AzuFit ofrece un sistema de acceso restringido donde solo usuarios autenticados pueden visualizar las sesiones de entrenamiento, garantizando así la exclusividad del contenido.
 
 ### ✨ Funcionalidades Principales
 * **Visualizacion de clases en Youtube o local** 
@@ -43,4 +45,4 @@ php artisan migrate --seed
 ### 6. Vincular almacenamiento
 php artisan storage:link
 
-Puedes usar admin@azufit.com + contraseña 0000 para acceder como admin y usar todas las funcionalidades
+

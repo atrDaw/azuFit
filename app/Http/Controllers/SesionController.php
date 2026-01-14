@@ -55,8 +55,7 @@ class SesionController extends Controller {
             abort(403, __('No autorizado para crear sesiones.'));
         }
 
-        //validacion de datos (crear fuera)
-
+        
         $sesion = new SesionEnDirecto();
         $sesion->titulo = $request->titulo;
         $sesion->disciplina_id = $request->disciplina_id;

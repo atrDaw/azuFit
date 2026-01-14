@@ -58,6 +58,9 @@ class ClaseController extends Controller {
     }
 
     public function edit($id) {
+        if(!auth()->user()->is_admin) {
+            abort(403, __('No autorizado'));
+        }
         $clase = Clase::findOrFail($id);
         $disciplinas = Disciplina::all();
         return view('clases.edit', compact('clase', 'disciplinas'));
